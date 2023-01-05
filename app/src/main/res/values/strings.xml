@@ -1,16 +1,18 @@
 <resources>
     <string name="app_name">4AL2AndroidGrp2</string>
-    <!-- Log In -->
+
     <string name="login_title">Bienvenue !</string>
-    <string name="login_subtitle">Veuillez vous connecter ou créer un nouveau compte</string>
+    <string name="login_subtitle_1">Veuillez vous connecter ou</string>
+    <string name="login_subtitle_2">créer un nouveau compte</string>
+    <string name="login_subtitle_3">pour utiliser l\'application.</string>
     <string name="submit_connection">Se connecter</string>
     <string name="create_account">Créer un nouveau compte</string>
-    <string name="forgotten_password">Mot de passe oublié</string>
-    <!-- Subscribe -->
+    <string name="forgotten_password"><u>Mot de passe oublié</u></string>
+
     <string name="inscription_title">Inscription</string>
     <string name="inscription_informations">Veuillez saisir ces différentes informations, afin que vos listes soient sauvegardées.</string>
     <string name="username">Nom d\'utilisateur</string>
-    <string name="email">E-Mail</string>
+    <string name="email">E-mail</string>
     <string name="password">Mot de passe</string>
     <string name="verify_password">Vérification du mot de passe</string>
     <string name="submit_inscription">S\'inscrire</string>

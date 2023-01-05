@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_grey"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="25dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -20,6 +22,104 @@
             android:textAlignment="center"
             android:textSize="25sp"
             android:fontFamily="@font/google_sans_bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/login_subtitle_1"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_nova_font"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/login_subtitle_2"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_nova_font"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/login_subtitle_3"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_nova_font"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:inputType="text"
+                android:textColorHint="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/email"
+                android:backgroundTint="@color/search_bar_grey"
+                android:fontFamily="@font/proxima_nova_font"
+                android:background="@drawable/text_input_background"
+                android:layout_marginBottom="15dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:inputType="text"
+                android:textColorHint="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/password"
+                android:backgroundTint="@color/search_bar_grey"
+                android:fontFamily="@font/proxima_nova_font"
+                android:background="@drawable/text_input_background"/>
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="75dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="@color/white"
+                android:text="@string/submit_connection"
+                android:backgroundTint="@color/light_purple"
+                android:fontFamily="@font/proxima_nova_font"
+                android:textAllCaps="false"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="@color/white"
+                android:text="@string/create_account"
+                android:fontFamily="@font/proxima_nova_font"
+                android:textAllCaps="false"
+                android:background="@drawable/border_button"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey"
+            android:textAlignment="center"
+            android:fontFamily="@font/google_sans_medium"
+            android:text="@string/forgotten_password" />
 
     </LinearLayout>
 
