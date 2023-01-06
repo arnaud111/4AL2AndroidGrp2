@@ -83,7 +83,7 @@
                 android:backgroundTint="@color/search_bar_grey"
                 android:fontFamily="@font/proxima_nova_font"
                 android:background="@drawable/text_input_background"/>
-            
+
         </LinearLayout>
 
         <LinearLayout

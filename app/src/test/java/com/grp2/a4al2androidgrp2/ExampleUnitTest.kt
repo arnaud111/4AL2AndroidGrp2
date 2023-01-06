@@ -1,4 +1,4 @@
-package com.example.a4al2androidgrp2
+package com.grp2.a4al2androidgrp2
 
 import org.junit.Test
 

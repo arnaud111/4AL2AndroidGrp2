@@ -38,6 +38,6 @@
     <string name="numbers_of_results">Nombre de résultats : </string>
 
     <string name="my_wishlist">Ma liste de souhaits</string>
-    <string name="empty_wishlist">Vous n'avez encore liké de contenu.</string>
-    <string name="add_wishlist">Cliquez sur l'étoile pour en rajouter.</string>
+    <string name="empty_wishlist">Vous n\'avez encore liké de contenu.</string>
+    <string name="add_wishlist">Cliquez sur l\'étoile pour en rajouter.</string>
 </resources>
