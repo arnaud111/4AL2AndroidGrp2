@@ -20,7 +20,7 @@
             android:text="@string/login_title"
             android:textColor="@color/white"
             android:textAlignment="center"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:fontFamily="@font/google_sans_bold"/>
 
         <LinearLayout
@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="@string/login_subtitle_1"
+                android:textSize="17sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"/>
 
@@ -42,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="@string/login_subtitle_2"
+                android:textSize="17sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"/>
 
@@ -50,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="@string/login_subtitle_3"
+                android:textSize="17sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"/>
 
@@ -59,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="15dp">
 
             <EditText
                 android:layout_width="match_parent"
@@ -97,9 +100,10 @@
                 android:layout_height="60dp"
                 android:textColor="@color/white"
                 android:text="@string/submit_connection"
-                android:backgroundTint="@color/light_purple"
+                android:textSize="17sp"
                 android:fontFamily="@font/proxima_nova_font"
                 android:textAllCaps="false"
+                android:letterSpacing="0"
                 android:layout_marginBottom="10dp"/>
 
             <Button
@@ -108,18 +112,29 @@
                 android:textColor="@color/white"
                 android:text="@string/create_account"
                 android:fontFamily="@font/proxima_nova_font"
+                android:textSize="17sp"
                 android:textAllCaps="false"
+                android:letterSpacing="0"
                 android:background="@drawable/border_button"/>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/grey"
-            android:textAlignment="center"
-            android:fontFamily="@font/google_sans_medium"
-            android:text="@string/forgotten_password" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:fontFamily="@font/google_sans_medium"
+                android:text="@string/forgotten_password"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
