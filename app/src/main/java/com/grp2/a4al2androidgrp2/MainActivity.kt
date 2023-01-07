@@ -21,5 +21,23 @@ class MainActivity : AppCompatActivity() {
     fun logIn(view: View) {
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
+        var error = false
+
+        email.setBackgroundResource(R.drawable.edit_text_background)
+        password.setBackgroundResource(R.drawable.edit_text_background)
+
+        if (email.text.toString() == "") {
+            email.setBackgroundResource(R.drawable.edit_text_error)
+            error = true
+        }
+
+        if (password.text.toString() == "") {
+            password.setBackgroundResource(R.drawable.edit_text_error)
+            error = true
+        }
+
+        if (!error) {
+            Log.d("LogIn", "Ok")
+        }
     }
 }
