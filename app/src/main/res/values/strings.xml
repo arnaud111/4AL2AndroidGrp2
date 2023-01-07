@@ -10,7 +10,8 @@
     <string name="forgotten_password"><u>Mot de passe oublié</u></string>
 
     <string name="inscription_title">Inscription</string>
-    <string name="inscription_informations">Veuillez saisir ces différentes informations, afin que vos listes soient sauvegardées.</string>
+    <string name="inscription_informations_1">Veuillez saisir ces différentes informations,</string>
+    <string name="inscription_informations_2">afin que vos listes soient sauvegardées.</string>
     <string name="username">Nom d\'utilisateur</string>
     <string name="email">E-mail</string>
     <string name="password">Mot de passe</string>

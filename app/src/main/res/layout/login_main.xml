@@ -118,7 +118,7 @@
                 android:textAllCaps="false"
                 android:letterSpacing="0"
                 android:background="@drawable/border_button"
-                android:onClick="showNewLayout"
+                android:onClick="showSubscribe"
                 tools:ignore="UsingOnClickInXml" />
 
         </LinearLayout>
