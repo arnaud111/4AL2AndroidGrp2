@@ -11,35 +11,27 @@
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="15dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/inscription_title"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:textSize="35sp"
-            android:fontFamily="@font/google_sans_bold"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginVertical="15dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/inscription_informations_1"
-                android:textSize="17sp"
+                android:text="@string/inscription_title"
                 android:textColor="@color/white"
-                android:fontFamily="@font/proxima_nova_font"/>
+                android:textAlignment="center"
+                android:textSize="35sp"
+                android:fontFamily="@font/google_sans_bold"
+                android:layout_marginBottom="15dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/inscription_informations_2"
+                android:text="@string/inscription_informations"
                 android:textSize="17sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"/>
