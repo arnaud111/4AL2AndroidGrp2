@@ -49,18 +49,20 @@
             android:layout_marginTop="15dp">
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textColorHint="@color/white"
                 android:textAlignment="center"
                 android:hint="@string/email"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"
+                android:background="@drawable/edit_text_background"
                 android:layout_marginBottom="15dp"/>
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textPassword"
@@ -68,9 +70,8 @@
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:hint="@string/password"
-                android:backgroundTint="@color/search_bar_grey"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"/>
+                android:background="@drawable/edit_text_background"/>
 
         </LinearLayout>
 
@@ -89,7 +90,9 @@
                 android:fontFamily="@font/proxima_nova_font"
                 android:textAllCaps="false"
                 android:letterSpacing="0"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:onClick="logIn"
+                tools:ignore="UsingOnClickInXml" />
 
             <Button
                 android:layout_width="match_parent"

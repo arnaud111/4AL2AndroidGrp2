@@ -13,6 +13,7 @@
     <string name="email">E-mail</string>
     <string name="password">Mot de passe</string>
     <string name="verify_password">Vérification du mot de passe</string>
+    <string name="password_policy">Règles du mot de passe :\n- Au moins 8 caractères\n- Au moins 1 majuscule\n- Au moins 1 minuscule\n- Au moins 1 chiffre</string>
     <string name="submit_inscription">S\'inscrire</string>
 
     <string name="welcome">Accueil</string>

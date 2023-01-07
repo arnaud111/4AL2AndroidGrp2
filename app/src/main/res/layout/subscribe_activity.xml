@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -45,6 +46,7 @@
             android:layout_marginTop="30dp">
 
             <EditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="text"
@@ -53,10 +55,11 @@
                 android:hint="@string/username"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"
+                android:background="@drawable/edit_text_background"
                 android:layout_marginBottom="10dp"/>
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="text"
@@ -65,10 +68,11 @@
                 android:hint="@string/email"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"
+                android:background="@drawable/edit_text_background"
                 android:layout_marginBottom="10dp"/>
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textPassword"
@@ -77,10 +81,14 @@
                 android:hint="@string/password"
                 android:textColor="@color/white"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"
-                android:layout_marginBottom="10dp"/>
+                android:background="@drawable/edit_text_error"
+                android:layout_marginBottom="10dp"
+                android:drawableEnd="@drawable/icon_password"
+                android:paddingEnd="10dp"
+                android:paddingStart="35dp"/>
 
             <EditText
+                android:id="@+id/confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textPassword"
@@ -88,9 +96,8 @@
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:hint="@string/verify_password"
-                android:backgroundTint="@color/search_bar_grey"
                 android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/text_input_background"/>
+                android:background="@drawable/edit_text_background" />
 
         </LinearLayout>
 
@@ -103,7 +110,9 @@
             android:fontFamily="@font/proxima_nova_font"
             android:textAllCaps="false"
             android:letterSpacing="0"
-            android:layout_marginTop="75dp"/>
+            android:layout_marginTop="75dp"
+            android:onClick="subscribe"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 
