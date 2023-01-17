@@ -13,6 +13,14 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.grp2.a4al2androidgrp2.api.API
+import com.grp2.a4al2androidgrp2.api.request.SubscribeRequest
+import com.grp2.a4al2androidgrp2.dto.Account
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SubscribeActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +90,30 @@ class SubscribeActivity: AppCompatActivity() {
         }
 
         if (!error) {
-            Log.d("Subscribe", "ok")
+            val api = Retrofit.Builder()
+                .baseUrl("http://192.168.137.1:7589")
+                .addConverterFactory(
+                    GsonConverterFactory.create())
+                .build()
+                .create(API::class.java)
+
+            val subscribeRequest = SubscribeRequest(
+                email.text.toString(),
+                password.text.toString()
+            )
+
+            api.subscribe(subscribeRequest)
+                .enqueue(object: Callback<Account> {
+
+                override fun onResponse(call: Call<Account>, response: Response<Account>) {
+                    val account = response.body();
+                    Log.d("Subscribe", account.toString())
+                }
+
+                override fun onFailure(call: Call<Account>, t: Throwable) {
+                    t.printStackTrace();
+                }
+            })
         }
     }
 }
