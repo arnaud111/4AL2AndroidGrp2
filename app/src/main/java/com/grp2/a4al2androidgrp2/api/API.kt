@@ -2,6 +2,8 @@ package com.grp2.a4al2androidgrp2.api
 
 import android.util.Log
 import com.grp2.a4al2androidgrp2.api.Auth.ApiAuthControler
+import com.grp2.a4al2androidgrp2.api.Auth.Response.LoginToken
+import com.grp2.a4al2androidgrp2.api.Auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.api.Auth.request.SubscribeRequest
 import com.grp2.a4al2androidgrp2.dto.Account
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -37,6 +39,24 @@ class API {
             return account
         } catch (e: Exception) {
             Log.d("/auth/subscribe", e.toString())
+            return null
+        }
+    }
+
+    suspend fun login(email: String, password: String): LoginToken? {
+
+        val loginRequest = LoginRequest(
+            email,
+            password
+        )
+
+        try {
+            val account = withContext(Dispatchers.IO) {
+                apiAuthControler.login(loginRequest).await()
+            }
+            return account
+        } catch (e: Exception) {
+            Log.d("/auth/login", e.toString())
             return null
         }
     }

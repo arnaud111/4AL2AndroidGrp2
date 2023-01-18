@@ -91,7 +91,7 @@
                 android:textAllCaps="false"
                 android:letterSpacing="0"
                 android:layout_marginBottom="10dp"
-                android:onClick="logIn"
+                android:onClick="login"
                 tools:ignore="UsingOnClickInXml" />
 
             <Button
