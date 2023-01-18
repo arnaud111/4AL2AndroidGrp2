@@ -51,10 +51,10 @@ class API {
         )
 
         try {
-            val account = withContext(Dispatchers.IO) {
+            val loginToken = withContext(Dispatchers.IO) {
                 apiAuthControler.login(loginRequest).await()
             }
-            return account
+            return loginToken
         } catch (e: Exception) {
             Log.d("/auth/login", e.toString())
             return null

@@ -1,5 +1,6 @@
 package com.grp2.a4al2androidgrp2
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,8 +29,15 @@ class MainActivity : AppCompatActivity() {
         if (!loginChecker(email, password)) {
             val api = API()
             lifecycleScope.launch {
-                val token = api.login(email.text.toString(), password.text.toString())
-                Log.d("Login", token.toString())
+                val login_token = api.login(email.text.toString(), password.text.toString())
+                if (login_token != null) {
+                    val sharedPref = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.putString("token", login_token.token)
+                    editor.apply()
+
+                }
+                Log.d("Login", login_token.toString())
             }
         }
     }
