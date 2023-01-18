@@ -1,14 +1,43 @@
 package com.grp2.a4al2androidgrp2.api
 
-import com.grp2.a4al2androidgrp2.api.request.SubscribeRequest
+import android.util.Log
+import com.grp2.a4al2androidgrp2.api.Auth.ApiAuthControler
+import com.grp2.a4al2androidgrp2.api.Auth.request.SubscribeRequest
 import com.grp2.a4al2androidgrp2.dto.Account
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.await
+import retrofit2.converter.gson.GsonConverterFactory
 
+class API {
 
-interface API {
+    private val baseUrl: String = "http://192.168.239.1:7589"
+    private val apiAuthControler: ApiAuthControler = Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(
+            GsonConverterFactory.create())
+        .addCallAdapterFactory(
+            CoroutineCallAdapterFactory())
+        .build()
+        .create(ApiAuthControler::class.java)
 
-    @POST("/auth/subscribe")
-    fun subscribe(@Body body: SubscribeRequest) : Call<Account>
+    suspend fun subscribe(email: String, password: String): Account? {
+
+        val subscribeRequest = SubscribeRequest(
+            email,
+            password
+        )
+
+        try {
+            val account = withContext(Dispatchers.IO) {
+                apiAuthControler.subscribe(subscribeRequest).await()
+            }
+            return account
+        } catch (e: Exception) {
+            Log.d("/auth/subscribe", e.toString())
+            return null
+        }
+    }
 }

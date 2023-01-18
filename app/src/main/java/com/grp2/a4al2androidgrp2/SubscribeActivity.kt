@@ -11,16 +11,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.grp2.a4al2androidgrp2.api.API
-import com.grp2.a4al2androidgrp2.api.request.SubscribeRequest
-import com.grp2.a4al2androidgrp2.dto.Account
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.coroutines.launch
 
 class SubscribeActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +51,17 @@ class SubscribeActivity: AppCompatActivity() {
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         val confirmPassword = findViewById<EditText>(R.id.confirm_password)
+
+        if (!this.checkSubscribeInfo(username, email, password, confirmPassword)) {
+            val api = API()
+            lifecycleScope.launch {
+                val account = api.subscribe(email.text.toString(), password.text.toString())
+                Log.d("Subscribe", account.toString())
+            }
+        }
+    }
+
+    private fun checkSubscribeInfo(username: EditText, email: EditText, password: EditText, confirmPassword: EditText): Boolean {
         var error = false
 
         username.setBackgroundResource(R.drawable.edit_text_background)
@@ -89,31 +94,6 @@ class SubscribeActivity: AppCompatActivity() {
             error = true
         }
 
-        if (!error) {
-            val api = Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:7589")
-                .addConverterFactory(
-                    GsonConverterFactory.create())
-                .build()
-                .create(API::class.java)
-
-            val subscribeRequest = SubscribeRequest(
-                email.text.toString(),
-                password.text.toString()
-            )
-
-            api.subscribe(subscribeRequest)
-                .enqueue(object: Callback<Account> {
-
-                override fun onResponse(call: Call<Account>, response: Response<Account>) {
-                    val account = response.body();
-                    Log.d("Subscribe", account.toString())
-                }
-
-                override fun onFailure(call: Call<Account>, t: Throwable) {
-                    t.printStackTrace();
-                }
-            })
-        }
+        return error;
     }
 }
