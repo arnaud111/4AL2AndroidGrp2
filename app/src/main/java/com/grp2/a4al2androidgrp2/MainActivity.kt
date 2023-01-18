@@ -2,6 +2,7 @@ package com.grp2.a4al2androidgrp2
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +13,18 @@ import com.grp2.a4al2androidgrp2.api.API
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+        if (sharedPref.contains("token")) {
+            val api = API(sharedPref.getString("token", "")!!);
+            lifecycleScope.launch {
+                val account = api.me()
+                Log.d("My Account", account.toString())
+            }
+        }
         setContentView(R.layout.login_main)
     }
 
@@ -31,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val login_token = api.login(email.text.toString(), password.text.toString())
                 if (login_token != null) {
-                    val sharedPref = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+
+                    val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
                     val editor = sharedPref.edit()
                     editor.putString("token", login_token.token)
                     editor.apply()

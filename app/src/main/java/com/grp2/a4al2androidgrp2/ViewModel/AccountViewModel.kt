@@ -1,12 +1,21 @@
 package com.grp2.a4al2androidgrp2.ViewModel
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.grp2.a4al2androidgrp2.api.API
 import com.grp2.a4al2androidgrp2.dto.Account
+import kotlinx.coroutines.launch
 
-class AccountViewModel : ViewModel() {
+class AccountViewModel(context: Context) : ViewModel() {
 
-    val currentAccount: MutableLiveData<Account> by lazy {
-        MutableLiveData<Account>()
+    private val _accountLiveData = MutableLiveData<Account>()
+    val account: LiveData<Account>
+        get() = _accountLiveData
+
+    init {
+
     }
 }
