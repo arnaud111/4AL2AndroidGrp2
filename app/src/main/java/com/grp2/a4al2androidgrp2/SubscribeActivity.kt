@@ -2,6 +2,8 @@ package com.grp2.a4al2androidgrp2
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -57,7 +59,33 @@ class SubscribeActivity: AppCompatActivity() {
             lifecycleScope.launch {
                 val account = api.subscribe(email.text.toString(), password.text.toString())
                 Log.d("Subscribe", account.toString())
+                if (account != null) {
+                    loginRequest(email, password)
+                }
             }
+        }
+    }
+
+    private fun launchHomePage() {
+        val intent = Intent(this, HomepageActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun loginRequest(email: EditText, password: EditText) {
+        val api = API()
+        lifecycleScope.launch {
+            val login_token = api.login(email.text.toString(), password.text.toString())
+            if (login_token != null) {
+
+                val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                editor.putString("token", login_token.token)
+                editor.apply()
+
+                launchHomePage()
+            }
+            Log.d("Login", login_token.toString())
         }
     }
 

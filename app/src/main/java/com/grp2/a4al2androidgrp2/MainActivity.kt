@@ -19,13 +19,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
         if (sharedPref.contains("token")) {
-            val api = API(sharedPref.getString("token", "")!!);
+            val api = API(sharedPref.getString("token", "")!!)
             lifecycleScope.launch {
                 val account = api.me()
                 Log.d("My Account", account.toString())
+                if (account != null) {
+                    launchHomePage()
+                }
             }
         }
         setContentView(R.layout.login_main)
+    }
+
+    private fun launchHomePage() {
+        val intent = Intent(this, HomepageActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun showSubscribe(view: View) {
@@ -38,19 +47,24 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
 
         if (!loginChecker(email, password)) {
-            val api = API()
-            lifecycleScope.launch {
-                val login_token = api.login(email.text.toString(), password.text.toString())
-                if (login_token != null) {
+            loginRequest(email, password)
+        }
+    }
 
-                    val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
-                    val editor = sharedPref.edit()
-                    editor.putString("token", login_token.token)
-                    editor.apply()
+    private fun loginRequest(email: EditText, password: EditText) {
+        val api = API()
+        lifecycleScope.launch {
+            val login_token = api.login(email.text.toString(), password.text.toString())
+            if (login_token != null) {
 
-                }
-                Log.d("Login", login_token.toString())
+                val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                editor.putString("token", login_token.token)
+                editor.apply()
+
+                launchHomePage()
             }
+            Log.d("Login", login_token.toString())
         }
     }
 
