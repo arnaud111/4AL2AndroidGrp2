@@ -6,8 +6,8 @@ data class Account (
     val email: String,
     val password: String,
     val sessions: List<String>,
-    val likes: List<String>,
-    val wishlist: List<String>,
+    val likes: List<Int>,
+    val wishlist: List<Int>,
     val _id: String,
     val createdAt: Date,
     val updatedAt: Date

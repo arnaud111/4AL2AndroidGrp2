@@ -1,11 +1,13 @@
 package com.grp2.a4al2androidgrp2.api
 
 import android.util.Log
-import com.grp2.a4al2androidgrp2.api.Auth.ApiAuthController
-import com.grp2.a4al2androidgrp2.api.Auth.Response.LoginToken
-import com.grp2.a4al2androidgrp2.api.Auth.request.LoginRequest
-import com.grp2.a4al2androidgrp2.api.Auth.request.SubscribeRequest
+import com.grp2.a4al2androidgrp2.api.auth.ApiAuthController
+import com.grp2.a4al2androidgrp2.dto.LoginToken
+import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
+import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
+import com.grp2.a4al2androidgrp2.api.steam.ApiSteamController
 import com.grp2.a4al2androidgrp2.dto.Account
+import com.grp2.a4al2androidgrp2.dto.GameInfo
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,8 +18,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class API(token: String = "") {
 
-    private val baseUrl: String = "http://192.168.239.1:7589"
+    private val baseUrl: String = "http://192.168.1.35:7589"
     private val apiAuthController: ApiAuthController;
+    private val apiSteamController: ApiSteamController = Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(ApiSteamController::class.java)
 
     init {
         val okHttpClient = OkHttpClient.Builder()
@@ -32,10 +40,8 @@ class API(token: String = "") {
         this.apiAuthController = Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
-            .addConverterFactory(
-                GsonConverterFactory.create())
-            .addCallAdapterFactory(
-                CoroutineCallAdapterFactory())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
             .create(ApiAuthController::class.java)
     }
@@ -47,14 +53,14 @@ class API(token: String = "") {
             password
         )
 
-        try {
+        return try {
             val account = withContext(Dispatchers.IO) {
                 apiAuthController.subscribe(subscribeRequest).await()
             }
-            return account
+            account
         } catch (e: Exception) {
             Log.d("/auth/subscribe", e.toString())
-            return null
+            null
         }
     }
 
@@ -65,27 +71,45 @@ class API(token: String = "") {
             password
         )
 
-        try {
+        return try {
             val loginToken = withContext(Dispatchers.IO) {
                 apiAuthController.login(loginRequest).await()
             }
-            return loginToken
+            loginToken
         } catch (e: Exception) {
             Log.d("/auth/login", e.toString())
-            return null
+            null
         }
     }
 
     suspend fun me(): Account? {
 
-        try {
+        return try {
             val account = withContext(Dispatchers.IO) {
                 apiAuthController.me().await()
             }
-            return account
+            account
         } catch (e: Exception) {
             Log.d("/auth/me", e.toString())
-            return null
+            null
+        }
+    }
+
+    suspend fun getGameDetails(steam_appId: Int, lang: String): GameInfo? {
+
+        return try {
+            val game = withContext(Dispatchers.IO) {
+                apiSteamController.getGameDetails(steam_appId, lang).await()
+            }
+            Log.d("getGameDetails", game.toString())
+            if (game.containsKey("$steam_appId")) {
+                game["$steam_appId"]?.data
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.d("getGameDetails", e.toString())
+            null
         }
     }
 }

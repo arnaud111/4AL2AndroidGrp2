@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@color/background_grey">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        android:letterSpacing="0"
+        android:onClick="launchLikedGames"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
