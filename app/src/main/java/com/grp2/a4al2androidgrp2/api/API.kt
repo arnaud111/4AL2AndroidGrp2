@@ -2,12 +2,12 @@ package com.grp2.a4al2androidgrp2.api
 
 import android.util.Log
 import com.grp2.a4al2androidgrp2.api.auth.ApiAuthController
-import com.grp2.a4al2androidgrp2.dto.LoginToken
+import com.grp2.a4al2androidgrp2.dto.account.LoginToken
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
 import com.grp2.a4al2androidgrp2.api.steam.ApiSteamController
-import com.grp2.a4al2androidgrp2.dto.Account
-import com.grp2.a4al2androidgrp2.dto.GameInfo
+import com.grp2.a4al2androidgrp2.dto.account.Account
+import com.grp2.a4al2androidgrp2.dto.game.GameInfo
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

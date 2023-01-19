@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.grp2.a4al2androidgrp2.adapter.GameInfoAdapter
 import com.grp2.a4al2androidgrp2.api.API
-import com.grp2.a4al2androidgrp2.dto.Account
-import com.grp2.a4al2androidgrp2.dto.GameInfo
+import com.grp2.a4al2androidgrp2.dto.account.Account
+import com.grp2.a4al2androidgrp2.dto.game.GameInfo
 import kotlinx.coroutines.launch
 import java.util.*
 

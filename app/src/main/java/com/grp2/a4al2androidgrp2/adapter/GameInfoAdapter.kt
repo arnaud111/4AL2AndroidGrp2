@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.grp2.a4al2androidgrp2.R
-import com.grp2.a4al2androidgrp2.dto.GameInfo
+import com.grp2.a4al2androidgrp2.dto.game.GameInfo
 import com.grp2.a4al2androidgrp2.viewholder.GameInfoViewHolder
 
 class GameInfoAdapter(private val games: List<GameInfo>) : RecyclerView.Adapter<GameInfoViewHolder>() {

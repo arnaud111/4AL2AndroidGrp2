@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="@color/white"
         android:padding="16dp"
         android:textStyle="bold"/>
 
@@ -16,6 +17,7 @@
         android:id="@+id/game_publisher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:padding="16dp"
         android:textStyle="bold"/>
@@ -24,6 +26,7 @@
         android:id="@+id/game_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:padding="16dp"
         android:textStyle="bold"/>
