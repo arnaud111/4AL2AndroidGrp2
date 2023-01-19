@@ -7,4 +7,5 @@ data class GameInfo (
     val publishers: List<String>,
     val price_overview: GamePrice,
     val background: String,
+    val is_free: Boolean,
 )

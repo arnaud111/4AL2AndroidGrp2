@@ -11,6 +11,10 @@ class GameInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(game: GameInfo) {
         itemView.findViewById<TextView>(R.id.game_name).text = game.name
         itemView.findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
-        itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
+        if (game.is_free) {
+            itemView.findViewById<TextView>(R.id.game_price).text = ""
+        } else {
+            itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
+        }
     }
 }
