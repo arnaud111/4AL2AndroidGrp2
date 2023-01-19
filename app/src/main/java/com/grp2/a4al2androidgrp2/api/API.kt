@@ -101,7 +101,6 @@ class API(token: String = "") {
             val game = withContext(Dispatchers.IO) {
                 apiSteamController.getGameDetails(steam_appId, lang).await()
             }
-            Log.d("getGameDetails", game.toString())
             if (game.containsKey("$steam_appId")) {
                 game["$steam_appId"]?.data
             } else {

@@ -6,4 +6,5 @@ data class GameInfo (
     val header_image: String,
     val publishers: List<String>,
     val price_overview: GamePrice,
+    val background: String,
 )
