@@ -23,10 +23,12 @@ import java.util.*
 class LikedGamesActivity : AppCompatActivity()  {
 
     lateinit var meViewModel: MeViewModel
-    var gamesDetailViewModel: MutableList<GameDetailViewModel> = arrayListOf()
+    lateinit var gameDetailViewModel: GameDetailViewModel
+    lateinit var account: Account
     var gamesDetail: MutableList<GameInfo> = arrayListOf()
     var context = this
     var language = Locale.getDefault().language
+    var index = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +50,9 @@ class LikedGamesActivity : AppCompatActivity()  {
                 launchLogin()
             } else {
                 if (it.likes.size > 0) {
-                    for (game_id in it.likes) {
-                        gamesDetailViewModel.add(createGameDetailViewModel(game_id, language))
-                    }
+                    account = it
+                    initGameDetailViewModel()
+                    gameDetailViewModel.getGameDetail(it.likes[index], language)
                 } else {
                     findViewById<RecyclerView>(R.id.games_list).visibility = View.GONE
                     findViewById<ViewStub>(R.id.empty_likes).visibility = View.VISIBLE
@@ -59,8 +61,8 @@ class LikedGamesActivity : AppCompatActivity()  {
         })
     }
 
-    private fun createGameDetailViewModel(steam_appId: Int, lang: String): GameDetailViewModel {
-        val gameDetailViewModel = ViewModelProvider(this).get(GameDetailViewModel::class.java)
+    private fun initGameDetailViewModel() {
+        gameDetailViewModel = ViewModelProvider(this).get(GameDetailViewModel::class.java)
         gameDetailViewModel.getGameDetailObserver().observe(this, Observer<Map<String, GameResponse>?> {
             if (it != null) {
                 it.forEach { game ->
@@ -72,10 +74,11 @@ class LikedGamesActivity : AppCompatActivity()  {
                 val recyclerView = findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(context)
+                index += 1
+                if (index < account.likes.size)
+                    gameDetailViewModel.getGameDetail(account.likes[index], language)
             }
         })
-        gameDetailViewModel.getGameDetail(steam_appId, lang)
-        return gameDetailViewModel
     }
 
     private fun launchLogin() {
