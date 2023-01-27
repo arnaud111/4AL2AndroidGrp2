@@ -8,27 +8,41 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.grp2.a4al2androidgrp2.api.API
+import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
+import com.grp2.a4al2androidgrp2.dto.account.Account
+import com.grp2.a4al2androidgrp2.dto.account.LoginToken
+import com.grp2.a4al2androidgrp2.viewmodel.LoginViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.MeViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var loginViewModel: LoginViewModel
+    lateinit var meViewModel: MeViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
         if (sharedPref.contains("token")) {
-            val api = API(sharedPref.getString("token", "")!!)
-            lifecycleScope.launch {
-                val account = api.me()
-                Log.d("My Account", account.toString())
-                if (account != null) {
-                    launchHomePage()
-                }
-            }
+            initMeViewModel()
+            meViewModel.me(sharedPref.getString("token", "")!!)
         }
         setContentView(R.layout.login_main)
+    }
+
+    private fun initMeViewModel() {
+        meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
+        meViewModel.getAccountObserver().observe(this, Observer<Account?> {
+            if (it != null) {
+                launchHomePage()
+            }
+        })
     }
 
     private fun launchHomePage() {
@@ -52,20 +66,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loginRequest(email: EditText, password: EditText) {
-        val api = API()
-        lifecycleScope.launch {
-            val login_token = api.login(email.text.toString(), password.text.toString())
-            if (login_token != null) {
+        initLoginViewModel();
+        val loginRequest = LoginRequest(
+            email.text.toString(),
+            password.text.toString()
+        )
+        loginViewModel.login(loginRequest)
+    }
 
+    private fun initLoginViewModel() {
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        loginViewModel.getLoginTokenObserver().observe(this, Observer<LoginToken?> {
+            if (it == null) {
+                Toast.makeText(this@MainActivity, "Failed to login", Toast.LENGTH_LONG).show()
+            } else {
                 val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
-                editor.putString("token", login_token.token)
+                editor.putString("token", it.token)
                 editor.apply()
 
                 launchHomePage()
             }
-            Log.d("Login", login_token.toString())
-        }
+        })
     }
 
     private fun loginChecker(email: EditText, password: EditText): Boolean {
