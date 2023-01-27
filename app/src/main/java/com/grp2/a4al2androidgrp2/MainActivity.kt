@@ -5,20 +5,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.grp2.a4al2androidgrp2.api.API
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.account.LoginToken
 import com.grp2.a4al2androidgrp2.viewmodel.LoginViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.MeViewModel
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 

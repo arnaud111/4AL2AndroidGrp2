@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,12 +12,22 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.grp2.a4al2androidgrp2.api.API
-import kotlinx.coroutines.launch
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
+import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
+import com.grp2.a4al2androidgrp2.dto.account.Account
+import com.grp2.a4al2androidgrp2.dto.account.LoginToken
+import com.grp2.a4al2androidgrp2.viewmodel.LoginViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.SubscribeViewModel
 
 class SubscribeActivity: AppCompatActivity() {
+
+    lateinit var loginViewModel: LoginViewModel
+    lateinit var subscribeViewModel: SubscribeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.subscribe_activity)
@@ -55,15 +64,24 @@ class SubscribeActivity: AppCompatActivity() {
         val confirmPassword = findViewById<EditText>(R.id.confirm_password)
 
         if (!this.checkSubscribeInfo(username, email, password, confirmPassword)) {
-            val api = API()
-            lifecycleScope.launch {
-                val account = api.subscribe(email.text.toString(), password.text.toString())
-                Log.d("Subscribe", account.toString())
-                if (account != null) {
-                    loginRequest(email, password)
-                }
-            }
+            initSubscribeViewModel()
+            val subscribeRequest = SubscribeRequest (
+                email.text.toString(),
+                password.text.toString()
+            )
+            subscribeViewModel.subscribe(subscribeRequest)
         }
+    }
+
+    private fun initSubscribeViewModel() {
+        subscribeViewModel = ViewModelProvider(this).get(SubscribeViewModel::class.java)
+        subscribeViewModel.getAccountObserver().observe(this, Observer<Account?> {
+            if (it == null) {
+                Toast.makeText(this@SubscribeActivity, "Failed to subscribe", Toast.LENGTH_LONG).show()
+            } else {
+                loginRequest()
+            }
+        })
     }
 
     private fun launchHomePage() {
@@ -72,21 +90,40 @@ class SubscribeActivity: AppCompatActivity() {
         finish()
     }
 
-    private fun loginRequest(email: EditText, password: EditText) {
-        val api = API()
-        lifecycleScope.launch {
-            val login_token = api.login(email.text.toString(), password.text.toString())
-            if (login_token != null) {
+    private fun launchLoginPage() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-                val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+    private fun loginRequest() {
+
+        val email = findViewById<EditText>(R.id.email)
+        val password = findViewById<EditText>(R.id.password)
+
+        initLoginViewModel();
+        val loginRequest = LoginRequest(
+            email.text.toString(),
+            password.text.toString()
+        )
+        loginViewModel.login(loginRequest)
+    }
+
+    private fun initLoginViewModel() {
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        loginViewModel.getLoginTokenObserver().observe(this, Observer<LoginToken?> {
+            if (it == null) {
+                Toast.makeText(this@SubscribeActivity, "Failed to login", Toast.LENGTH_LONG).show()
+                launchLoginPage()
+            } else {
+                val sharedPref: SharedPreferences = getSharedPreferences("token_pref", MODE_PRIVATE)
                 val editor = sharedPref.edit()
-                editor.putString("token", login_token.token)
+                editor.putString("token", it.token)
                 editor.apply()
 
                 launchHomePage()
             }
-            Log.d("Login", login_token.toString())
-        }
+        })
     }
 
     private fun checkSubscribeInfo(username: EditText, email: EditText, password: EditText, confirmPassword: EditText): Boolean {
