@@ -1,4 +1,4 @@
-package com.grp2.a4al2androidgrp2.viewmodel
+package com.grp2.a4al2androidgrp2.viewmodel.auth
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

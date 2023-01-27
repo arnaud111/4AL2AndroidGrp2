@@ -1,15 +1,16 @@
-package com.grp2.a4al2androidgrp2.viewmodel
+package com.grp2.a4al2androidgrp2.viewmodel.auth
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.grp2.a4al2androidgrp2.api.RetrofitInstance
 import com.grp2.a4al2androidgrp2.api.auth.ApiAuthController
+import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MeViewModel: ViewModel() {
+class SubscribeViewModel: ViewModel() {
 
     lateinit var accountLiveDate: MutableLiveData<Account?>
     init {
@@ -20,9 +21,9 @@ class MeViewModel: ViewModel() {
         return accountLiveDate;
     }
 
-    fun me(token: String) {
-        val api = RetrofitInstance.getRetrofitInstance(token).create(ApiAuthController::class.java)
-        val call = api.me()
+    fun subscribe(body: SubscribeRequest) {
+        val api = RetrofitInstance.getRetrofitInstance().create(ApiAuthController::class.java)
+        val call = api.subscribe(body)
         call.enqueue(object: Callback<Account> {
             override fun onResponse(call: Call<Account>, response: Response<Account>) {
                 if (response.isSuccessful) {

@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.account.LoginToken
-import com.grp2.a4al2androidgrp2.viewmodel.LoginViewModel
-import com.grp2.a4al2androidgrp2.viewmodel.MeViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.auth.LoginViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.auth.MeViewModel
 
 class MainActivity : AppCompatActivity() {
 
