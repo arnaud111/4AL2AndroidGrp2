@@ -23,7 +23,7 @@ class GameInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
         }
         Glide.with(itemView)
-            .load("https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_appid}/library_600x900.jpg")
+            .load(game.header_image) // "https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_appid}/library_600x900.jpg"
             .into(itemView.findViewById<ImageView>(R.id.header_image))
 
         val button = itemView.findViewById<Button>(R.id.game_detail)
