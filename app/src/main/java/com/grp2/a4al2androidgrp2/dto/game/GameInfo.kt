@@ -9,4 +9,5 @@ data class GameInfo (
     val background: String,
     val background_raw: String,
     val is_free: Boolean,
+    val screenshots: List<GameScreenshot>
 )
