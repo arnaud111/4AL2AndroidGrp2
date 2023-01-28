@@ -4,7 +4,6 @@ import com.grp2.a4al2androidgrp2.dto.account.LoginToken
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
 import com.grp2.a4al2androidgrp2.dto.account.Account
-import com.grp2.a4al2androidgrp2.dto.game.GameResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

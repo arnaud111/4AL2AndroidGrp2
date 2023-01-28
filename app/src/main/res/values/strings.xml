@@ -31,13 +31,14 @@
     <string name="empty_likes">Vous n\'avez encore pas liké de contenu.</string>
     <string name="add_likes">Cliquez sur le coeur pour en rajouter.</string>
 
-    <string name="forgotten_password_informations">Veuillez saisir votre email afin de rénitialiser votre mot de passe</string>
+    <string name="forgotten_password_informations">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
     <string name="resend_password">Renvoyer mon mot de passe</string>
 
     <string name="search">Recherche</string>
     <string name="numbers_of_results">Nombre de résultats : </string>
 
     <string name="my_wishlist">Ma liste de souhaits</string>
-    <string name="empty_wishlist">Vous n\'avez encore liké de contenu.</string>
+    <string name="empty_wishlist">Vous n\'avez pas encore ajouté de contenu.</string>
     <string name="add_wishlist">Cliquez sur l\'étoile pour en rajouter.</string>
+    <string name="hint_empty_wishlist">Liste de souhait vide</string>
 </resources>
