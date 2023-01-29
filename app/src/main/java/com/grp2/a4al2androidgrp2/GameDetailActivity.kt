@@ -3,17 +3,21 @@ package com.grp2.a4al2androidgrp2
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.GameResponse
 import com.grp2.a4al2androidgrp2.viewmodel.auth.*
@@ -153,6 +157,23 @@ class GameDetailActivity : AppCompatActivity() {
                     Glide.with(this)
                         .load(it["$gameId"]?.data?.screenshots?.get(0)?.path_full)
                         .into(findViewById<ImageView>(R.id.background_image))
+
+                    Glide.with(this)
+                        .load(it["$gameId"]?.data?.header_image)
+                        .into(findViewById<ImageView>(R.id.header_image))
+
+                    val view = findViewById<View>(R.id.background_image_item)
+                    Glide.with(this)
+                        .load(it["$gameId"]?.data?.background)
+                        .into(object : CustomTarget<Drawable>() {
+                            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                                view.background = resource
+                            }
+                            override fun onLoadCleared(placeholder: Drawable?) {}
+                        })
+
+                    findViewById<TextView>(R.id.game_name).text = it["$gameId"]?.data?.name
+                    findViewById<TextView>(R.id.game_publisher).text = it["$gameId"]?.data?.publishers!![0]
                 } else {
                     launchHomePage()
                 }
