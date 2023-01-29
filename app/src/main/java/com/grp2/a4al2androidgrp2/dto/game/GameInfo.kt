@@ -4,6 +4,7 @@ data class GameInfo (
     val steam_appid: Int,
     val name: String,
     val header_image: String,
+    val short_description: String,
     val publishers: List<String>,
     val price_overview: GamePrice,
     val background: String,

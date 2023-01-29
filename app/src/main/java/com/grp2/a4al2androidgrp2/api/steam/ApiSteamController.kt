@@ -1,5 +1,6 @@
 package com.grp2.a4al2androidgrp2.api.steam
 
+import com.grp2.a4al2androidgrp2.dto.game.GameMostPlayedResponse
 import com.grp2.a4al2androidgrp2.dto.game.GameResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -9,4 +10,8 @@ interface ApiSteamController {
 
     @GET("/steamApi/getGameDetails/{steam_appId}/{lang}")
     fun getGameDetails(@Path("steam_appId") steam_appId: Int, @Path("lang") lang: String) : Call<Map<String, GameResponse>>
+
+    @GET("/steamApi/getMostPlayedGames/{lang}")
+    fun getGameMostPlayed(@Path("lang") lang: String) : Call<GameMostPlayedResponse>
+
 }
