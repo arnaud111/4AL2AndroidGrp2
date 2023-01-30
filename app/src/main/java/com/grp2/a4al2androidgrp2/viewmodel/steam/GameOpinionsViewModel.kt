@@ -1,5 +1,6 @@
 package com.grp2.a4al2androidgrp2.viewmodel.steam
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.grp2.a4al2androidgrp2.api.RetrofitInstance

@@ -16,5 +16,5 @@ interface ApiSteamController {
     fun getGameOpinions(@Path("steam_appId") steam_appId: Int, @Path("lang") lang: String) : Call<GameOpinionsResponse>
 
     @GET("/steamApi/getPlayerPseudo/{steamid}")
-    fun getPlayerPseudo(@Path("steamid") steamid: Int) : Call<SteamAccount>
+    fun getPlayerPseudo(@Path("steamid") steamid: String) : Call<SteamAccount>
 }

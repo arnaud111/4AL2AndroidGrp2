@@ -20,7 +20,7 @@ class SteamAccountViewModel: ViewModel() {
         return gameDetailLiveDate;
     }
 
-    fun getPlayerPseudo(steamid: Int) {
+    fun getPlayerPseudo(steamid: String) {
         val api = RetrofitInstance.getRetrofitInstance().create(ApiSteamController::class.java)
         val call = api.getPlayerPseudo(steamid)
         call.enqueue(object: Callback<SteamAccount> {
