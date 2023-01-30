@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
+import android.text.method.ScrollingMovementMethod
 import android.view.View
-import android.view.ViewStub
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,18 +15,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.grp2.a4al2androidgrp2.adapter.GameOpinionAdapter
 import com.grp2.a4al2androidgrp2.dto.account.Account
-import com.grp2.a4al2androidgrp2.dto.game.GameResponse
+import com.grp2.a4al2androidgrp2.dto.game.*
 import com.grp2.a4al2androidgrp2.viewmodel.auth.*
 import com.grp2.a4al2androidgrp2.viewmodel.steam.GameDetailViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.steam.GameOpinionsViewModel
+import com.grp2.a4al2androidgrp2.viewmodel.steam.SteamAccountViewModel
 import java.util.*
 
 class GameDetailActivity : AppCompatActivity() {
 
+    var index = 0
     var gameId = 0
     var description_displayed = true
     lateinit var account: Account
@@ -36,7 +41,10 @@ class GameDetailActivity : AppCompatActivity() {
     lateinit var removeLikeViewModel: RemoveLikeViewModel
     lateinit var addWishViewModel: AddWishViewModel
     lateinit var removeWishViewModel: RemoveWishViewModel
+    lateinit var gameOpinionsViewModel: GameOpinionsViewModel
+    lateinit var steamAccountViewModel: SteamAccountViewModel
     lateinit var token: String
+    lateinit var opinionList: List<GameOpinion>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +53,48 @@ class GameDetailActivity : AppCompatActivity() {
         initGameDetailViewModel()
         gameDetailViewModel.getGameDetail(gameId, Locale.getDefault().language)
         getUser()
+        initAllOnClickListener()
+        initGameOpinionsViewModel()
+        initSteamAccountViewModel()
+        gameOpinionsViewModel.getGameOpinions(gameId, Locale.getDefault().language)
+        findViewById<TextView>(R.id.description).movementMethod = ScrollingMovementMethod()
+    }
+
+    private fun initGameOpinionsViewModel() {
+        gameOpinionsViewModel = ViewModelProvider(this).get(GameOpinionsViewModel::class.java)
+        gameOpinionsViewModel.getGameOpinionsObserver().observe(this, Observer<GameOpinionsResponse?> {
+            if (it != null) {
+                opinionList = it.reviews
+                if (opinionList.size > 0) {
+                    steamAccountViewModel.getPlayerPseudo(opinionList[index].author.steamid)
+                }
+            }
+        })
+    }
+
+    private fun initSteamAccountViewModel() {
+        steamAccountViewModel = ViewModelProvider(this).get(SteamAccountViewModel::class.java)
+        steamAccountViewModel.getSteamAccountObserver().observe(this, Observer<SteamAccount?> {
+            if (it != null) {
+                opinionList[index].author.pseudo = it.pseudo
+                index += 1
+                if (opinionList.size > index) {
+                    steamAccountViewModel.getPlayerPseudo(opinionList[index].author.steamid)
+                } else {
+                    displayOpinion()
+                }
+            }
+        })
+    }
+
+    private fun displayOpinion() {
+        val adapter = GameOpinionAdapter(opinionList)
+        val recyclerView = findViewById<RecyclerView>(R.id.opinion_list)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun initAllOnClickListener() {
         initOnClickLike()
         initOnClickWish()
         initOnClickOpinion()
@@ -182,32 +232,37 @@ class GameDetailActivity : AppCompatActivity() {
                 launchHomePage()
             } else {
                 if (it["$gameId"]?.success == true) {
-                    Glide.with(this)
-                        .load(it["$gameId"]?.data?.screenshots?.get(0)?.path_full)
-                        .into(findViewById<ImageView>(R.id.background_image))
-
-                    Glide.with(this)
-                        .load(it["$gameId"]?.data?.header_image)
-                        .into(findViewById<ImageView>(R.id.header_image))
-
-                    val view = findViewById<View>(R.id.background_image_item)
-                    Glide.with(this)
-                        .load(it["$gameId"]?.data?.background)
-                        .into(object : CustomTarget<Drawable>() {
-                            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                                view.background = resource
-                            }
-                            override fun onLoadCleared(placeholder: Drawable?) {}
-                        })
-
-                    findViewById<TextView>(R.id.game_name).text = it["$gameId"]?.data?.name
-                    findViewById<TextView>(R.id.game_publisher).text = it["$gameId"]?.data?.publishers!![0]
-                    findViewById<TextView>(R.id.description).text = Html.fromHtml(it["$gameId"]?.data?.detailed_description)
+                    displayGameContent(it["$gameId"]?.data!!)
                 } else {
                     launchHomePage()
                 }
             }
         })
+    }
+
+    private fun displayGameContent(game: GameInfo) {
+
+        Glide.with(this)
+            .load(game.screenshots[0].path_full)
+            .into(findViewById<ImageView>(R.id.background_image))
+
+        Glide.with(this)
+            .load(game.header_image)
+            .into(findViewById<ImageView>(R.id.header_image))
+
+        val view = findViewById<View>(R.id.background_image_item)
+        Glide.with(this)
+            .load(game.background)
+            .into(object : CustomTarget<Drawable>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    view.background = resource
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {}
+            })
+
+        findViewById<TextView>(R.id.game_name).text = game.name
+        findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
+        findViewById<TextView>(R.id.description).text = Html.fromHtml(game.detailed_description)
     }
 
     private fun launchLogin() {
