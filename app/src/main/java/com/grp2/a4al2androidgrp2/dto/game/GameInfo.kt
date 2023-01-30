@@ -6,6 +6,7 @@ data class GameInfo (
     val header_image: String,
     val publishers: List<String>,
     val price_overview: GamePrice,
+    val detailed_description: String,
     val background: String,
     val background_raw: String,
     val is_free: Boolean,

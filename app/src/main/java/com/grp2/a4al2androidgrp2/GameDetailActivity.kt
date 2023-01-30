@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.view.ViewStub
 import android.widget.Button
@@ -27,6 +28,7 @@ import java.util.*
 class GameDetailActivity : AppCompatActivity() {
 
     var gameId = 0
+    var description_displayed = true
     lateinit var account: Account
     lateinit var meViewModel: MeViewModel
     lateinit var gameDetailViewModel: GameDetailViewModel
@@ -45,6 +47,8 @@ class GameDetailActivity : AppCompatActivity() {
         getUser()
         initOnClickLike()
         initOnClickWish()
+        initOnClickOpinion()
+        initOnClickDescription()
         findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener { finish() }
     }
 
@@ -56,6 +60,30 @@ class GameDetailActivity : AppCompatActivity() {
         token = sharedPref.getString("token", "")!!
         initMeViewModel()
         meViewModel.me(token)
+    }
+
+    private fun initOnClickOpinion() {
+        findViewById<Button>(R.id.opinion_button).setOnClickListener {
+            if (description_displayed) {
+                findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.border_button)
+                findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_full)
+                findViewById<RecyclerView>(R.id.opinion_list).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.description).visibility = View.GONE
+                description_displayed = false
+            }
+        }
+    }
+
+    private fun initOnClickDescription() {
+        findViewById<Button>(R.id.description_button).setOnClickListener {
+            if (!description_displayed) {
+                findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_full)
+                findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.border_button)
+                findViewById<TextView>(R.id.description).visibility = View.VISIBLE
+                findViewById<RecyclerView>(R.id.opinion_list).visibility = View.GONE
+                description_displayed = true
+            }
+        }
     }
 
     private fun initOnClickLike() {
@@ -174,6 +202,7 @@ class GameDetailActivity : AppCompatActivity() {
 
                     findViewById<TextView>(R.id.game_name).text = it["$gameId"]?.data?.name
                     findViewById<TextView>(R.id.game_publisher).text = it["$gameId"]?.data?.publishers!![0]
+                    findViewById<TextView>(R.id.description).text = Html.fromHtml(it["$gameId"]?.data?.detailed_description)
                 } else {
                     launchHomePage()
                 }
