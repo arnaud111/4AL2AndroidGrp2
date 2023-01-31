@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#B3B3B3</color>
     <color name="background_grey">#FF1A2025</color>
+    <color name="background_recyclerview_grey">#FF1E262C</color>
     <color name="light_purple">#FF626af7</color>
     <color name="search_bar_grey">#FF1e272d</color>
     <color name="error_red">#FFfe004e</color>
