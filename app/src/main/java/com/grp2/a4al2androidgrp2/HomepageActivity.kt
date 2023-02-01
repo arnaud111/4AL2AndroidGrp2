@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -88,6 +89,13 @@ class HomepageActivity : AppCompatActivity()  {
                 findViewById<TextView>(R.id.title).text = gamesDetail[0].name
                 var description: String = gamesDetail[0].short_description.slice(0..100) + "..."
                 findViewById<TextView>(R.id.description).text = description
+
+                findViewById<Button>(R.id.main_detail).setOnClickListener {
+                    val intent = Intent(this, GameDetailActivity::class.java)
+                    intent.putExtra("game_id", gamesDetail[0].steam_appid)
+                    startActivity(intent)
+                }
+
                 index += 1
                 if (index < gamesMostPlayed.size && index < MAX_SHOWN_GAMES)
                     gameDetailViewModel.getGameDetail(gamesMostPlayed[index], language)
@@ -106,9 +114,8 @@ class HomepageActivity : AppCompatActivity()  {
         startActivity(intent)
     }
 
-    //TODO
-    /*fun launchWishlist(view: View) {
+    fun launchWishlist(view: View) {
         val intent = Intent(this, WishlistActivity::class.java)
         startActivity(intent)
-    }*/
+    }
 }

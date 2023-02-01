@@ -40,7 +40,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/whishlist"
+                android:src="@drawable/wishlist"
                 android:background="@color/background_grey"
                 android:padding="16dp"
                 android:onClick="launchWishlist"/>
@@ -124,11 +124,13 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/main_detail"
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:text="@string/know_more"
                 android:backgroundTint="@color/light_purple"
                 android:fontFamily="@font/proxima_nova_font"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textAllCaps="false"
                 android:layout_gravity="bottom|left"
