@@ -4,127 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginHorizontal="25dp">
+        android:name="com.grp2.a4al2androidgrp2.fragment.LoginFragment" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login_title"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="35sp"
-                android:fontFamily="@font/google_sans_bold"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/login_subtitle"
-                android:textSize="17sp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/proxima_nova_font"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp">
-
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:inputType="textEmailAddress"
-                android:textColorHint="@color/white"
-                android:textAlignment="center"
-                android:hint="@string/email"
-                android:textColor="@color/white"
-                android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/edit_text_background"
-                android:layout_marginBottom="15dp"/>
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:inputType="textPassword"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:hint="@string/password"
-                android:fontFamily="@font/proxima_nova_font"
-                android:background="@drawable/edit_text_background"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginVertical="75dp">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:textColor="@color/white"
-                android:text="@string/submit_connection"
-                android:textSize="17sp"
-                android:fontFamily="@font/proxima_nova_font"
-                android:textAllCaps="false"
-                android:letterSpacing="0"
-                android:layout_marginBottom="10dp"
-                android:onClick="login"
-                tools:ignore="UsingOnClickInXml" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:textColor="@color/white"
-                android:text="@string/create_account"
-                android:fontFamily="@font/proxima_nova_font"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                android:letterSpacing="0"
-                android:background="@drawable/border_button"
-                android:onClick="showSubscribe"
-                tools:ignore="UsingOnClickInXml" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:fontFamily="@font/google_sans_medium"
-                android:text="@string/forgotten_password"
-                android:layout_alignParentBottom="true"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

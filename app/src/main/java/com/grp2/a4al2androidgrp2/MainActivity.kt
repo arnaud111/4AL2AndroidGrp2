@@ -8,28 +8,47 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.account.LoginToken
+import com.grp2.a4al2androidgrp2.fragment.LoginFragment
 import com.grp2.a4al2androidgrp2.viewmodel.auth.LoginViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.auth.MeViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.login_main) {
 
     lateinit var loginViewModel: LoginViewModel
     lateinit var meViewModel: MeViewModel
+    private lateinit var navController: NavController
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<LoginFragment>(R.id.fragment_container_view)
+            }
+        }
+        /*val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
         if (sharedPref.contains("token")) {
             initMeViewModel()
             meViewModel.me(sharedPref.getString("token", "")!!)
-        }
+        }*/
         setContentView(R.layout.login_main)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        navController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
     }
 
     private fun initMeViewModel() {
