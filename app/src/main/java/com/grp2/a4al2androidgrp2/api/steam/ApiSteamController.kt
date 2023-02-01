@@ -1,6 +1,7 @@
 package com.grp2.a4al2androidgrp2.api.steam
 
 import com.grp2.a4al2androidgrp2.dto.game.GameOpinionsResponse
+import com.grp2.a4al2androidgrp2.dto.game.GameMostPlayedResponse
 import com.grp2.a4al2androidgrp2.dto.game.GameResponse
 import com.grp2.a4al2androidgrp2.dto.game.SteamAccount
 import retrofit2.Call
@@ -17,4 +18,8 @@ interface ApiSteamController {
 
     @GET("/steamApi/getPlayerPseudo/{steamid}")
     fun getPlayerPseudo(@Path("steamid") steamid: String) : Call<SteamAccount>
+
+    @GET("/steamApi/getMostPlayedGames/{lang}")
+    fun getGameMostPlayed(@Path("lang") lang: String) : Call<GameMostPlayedResponse>
+
 }

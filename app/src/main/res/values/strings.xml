@@ -18,7 +18,7 @@
 
     <string name="welcome">Accueil</string>
     <string name="find_game">Rechercher un jeu…</string>
-    <string name="best_sales">Les meilleures ventes</string>
+    <string name="best_sales"><u>Les meilleures ventes</u></string>
     <string name="know_more">En savoir plus</string>
     <string name="price">Prix : </string>
     <string name="free">Free</string>

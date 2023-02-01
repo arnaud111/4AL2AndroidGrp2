@@ -19,7 +19,7 @@ class GameInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(game: GameInfo) {
         itemView.findViewById<TextView>(R.id.game_name).text = game.name
         itemView.findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
-        if (!game.is_free) {
+        if (!game.is_free && game.price_overview != null) {
             itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
         }
         Glide.with(itemView)
