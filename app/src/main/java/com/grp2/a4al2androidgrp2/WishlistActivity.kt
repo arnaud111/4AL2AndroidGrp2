@@ -82,7 +82,7 @@ class WishlistActivity : AppCompatActivity()  {
     }
 
     private fun launchLogin() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivityOld::class.java)
         startActivity(intent)
         finish()
     }

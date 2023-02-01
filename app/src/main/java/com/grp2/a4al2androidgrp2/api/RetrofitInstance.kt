@@ -1,6 +1,5 @@
 package com.grp2.a4al2androidgrp2.api
 
-import com.grp2.a4al2androidgrp2.api.steam.ApiSteamController
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

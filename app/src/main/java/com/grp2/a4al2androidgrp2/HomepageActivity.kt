@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.view.ViewStub
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,7 +19,6 @@ import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.GameInfo
 import com.grp2.a4al2androidgrp2.dto.game.GameMostPlayedResponse
 import com.grp2.a4al2androidgrp2.dto.game.GameResponse
-import com.grp2.a4al2androidgrp2.viewmodel.auth.MeViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.steam.GameDetailViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.steam.GameMostPlayedViewModel
 import java.util.*
@@ -104,7 +102,7 @@ class HomepageActivity : AppCompatActivity()  {
     }
 
     private fun launchLogin() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivityOld::class.java)
         startActivity(intent)
         finish()
     }

@@ -91,7 +91,7 @@ class SubscribeActivity: AppCompatActivity() {
     }
 
     private fun launchLoginPage() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivityOld::class.java)
         startActivity(intent)
         finish()
     }
