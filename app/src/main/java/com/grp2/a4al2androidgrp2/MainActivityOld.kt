@@ -1,5 +1,4 @@
 package com.grp2.a4al2androidgrp2
-import com.grp2.a4al2androidgrp2.R
 
 import android.content.Context
 import android.content.Intent

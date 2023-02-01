@@ -7,16 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.grp2.a4al2androidgrp2.R
 
-
-class SubscribeFragment : Fragment() {
+class HomePageFragment: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println("Guys, we are in subscribe")
-        return inflater.inflate(R.layout.subscribe_activity, container, false)
+        println("Guys, we are in")
+        return inflater.inflate(R.layout.homepage, container, false)
     }
 }
