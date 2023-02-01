@@ -18,7 +18,11 @@
     <fragment
         android:id="@+id/subscribeFragment"
         android:name="com.grp2.a4al2androidgrp2.SubscribeFragment"
-        android:label="SubscribeFragment" />
+        android:label="SubscribeFragment" >
+        <action
+            android:id="@+id/action_subscribeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.grp2.a4al2androidgrp2.HomePageFragment"

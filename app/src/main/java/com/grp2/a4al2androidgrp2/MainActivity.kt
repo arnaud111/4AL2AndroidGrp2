@@ -92,10 +92,9 @@ class LoginFragment : Fragment() {
 
     private fun initLoginViewModel() {
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        loginViewModel.getLoginTokenObserver().observe(viewLifecycleOwner, Observer<LoginToken?> {
+        loginViewModel.getLoginTokenObserver().observe(viewLifecycleOwner) {
             if (it == null) {
-                //Toast.makeText(this@MainActivityOld, "Failed to login", Toast.LENGTH_LONG).show()
-                println("Failed to login")
+                Toast.makeText(requireContext(), "Failed to login", Toast.LENGTH_LONG).show()
             } else {
                 val editor = requireActivity().getPreferences(0).edit()
                 editor.putString("token", it.token)
@@ -104,7 +103,7 @@ class LoginFragment : Fragment() {
                     LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
                 )
             }
-        })
+        }
     }
     private fun loginChecker(email: EditText, password: EditText): Boolean {
         var error = false
