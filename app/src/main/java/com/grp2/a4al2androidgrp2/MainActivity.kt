@@ -53,7 +53,9 @@ class LoginFragment : Fragment() {
         val btnTosubscribe = view.findViewById<Button>(R.id.btn_tosubscribe)
         btnTosubscribe.setOnClickListener(){
             println("Click subscribe")
-            LoginFragmentDirections.actionLoginFragmentToSubscribeFragment()
+            findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToSubscribeFragment()
+            )
         }
         return view
     }
@@ -62,7 +64,9 @@ class LoginFragment : Fragment() {
         meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
         meViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
-                LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
+                )
             }
         }
     }
@@ -96,7 +100,9 @@ class LoginFragment : Fragment() {
                 val editor = requireActivity().getPreferences(0).edit()
                 editor.putString("token", it.token)
                 editor.apply()
-                LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
+                )
             }
         })
     }
