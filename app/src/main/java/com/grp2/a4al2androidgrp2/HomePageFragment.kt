@@ -1,6 +1,5 @@
 package com.grp2.a4al2androidgrp2
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,12 +44,14 @@ class HomePageFragment: Fragment() {
                 SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
             )
         }
+        initGameMostPlayedViewModel()
+        gameMostPlayedViewModel.getGameMostPlayed(language)
         return inflater.inflate(R.layout.homepage, container, false)
     }
 
     private fun initGameMostPlayedViewModel() {
         gameMostPlayedViewModel = ViewModelProvider(this).get(GameMostPlayedViewModel::class.java)
-        gameMostPlayedViewModel.getGameMostPlayedObserver().observe(this, Observer<GameMostPlayedResponse?> {
+        gameMostPlayedViewModel.getGameMostPlayedObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 findNavController().navigate(
                     SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
@@ -61,18 +62,18 @@ class HomePageFragment: Fragment() {
                     gamesMostPlayed.add(game.appid)
                 }
                 initGameDetailViewModel()
-                if(gamesMostPlayed.size > 0){
+                if (gamesMostPlayed.size > 0) {
                     gameDetailViewModel.getGameDetail(gamesMostPlayed[0], language)
 
                 }
 
             }
-        })
+        }
     }
 
     private fun initGameDetailViewModel() {
         gameDetailViewModel = ViewModelProvider(this).get(GameDetailViewModel::class.java)
-        gameDetailViewModel.getGameDetailObserver().observe(this, Observer<Map<String, GameResponse>?> {
+        gameDetailViewModel.getGameDetailObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 it.forEach { game ->
                     if (game.value.success) {
@@ -82,7 +83,7 @@ class HomePageFragment: Fragment() {
                 val adapter = GameInfoAdapter(gamesDetail)
                 val recyclerView = requireView().findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 Glide.with(this)
                     .load(gamesDetail[0].background_raw)
                     .into(requireView().findViewById<ImageView>(R.id.background_image))
@@ -104,6 +105,6 @@ class HomePageFragment: Fragment() {
                 if (index < gamesMostPlayed.size && index < MAX_SHOWN_GAMES)
                     gameDetailViewModel.getGameDetail(gamesMostPlayed[index], language)
             }
-        })
+        }
     }
 }
