@@ -130,8 +130,8 @@ class GameDetailFragment: Fragment() {
     private fun initOnClickOpinion(view: View) {
         view.findViewById<Button>(R.id.opinion_button).setOnClickListener {
             if (description_displayed) {
-                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.border_button)
-                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_full)
+                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_detail_description_empty)
+                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_detail_opinion_full)
                 view.findViewById<RecyclerView>(R.id.opinion_list).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.description).visibility = View.GONE
                 description_displayed = false
@@ -142,8 +142,8 @@ class GameDetailFragment: Fragment() {
     private fun initOnClickDescription(view: View) {
         view.findViewById<Button>(R.id.description_button).setOnClickListener {
             if (!description_displayed) {
-                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_full)
-                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.border_button)
+                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_detail_description_full)
+                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_detail_opinion_empty)
                 view.findViewById<TextView>(R.id.description).visibility = View.VISIBLE
                 view.findViewById<RecyclerView>(R.id.opinion_list).visibility = View.GONE
                 description_displayed = true
