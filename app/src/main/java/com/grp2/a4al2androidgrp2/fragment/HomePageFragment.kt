@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -48,7 +45,18 @@ class HomePageFragment: Fragment() {
         gameMostPlayedViewModel.getGameMostPlayed(language)
         val view = inflater.inflate(R.layout.homepage, container, false)
         initOnClickButton(view)
+        initOnFocus(view)
         return view
+    }
+
+    private fun initOnFocus(view: View){
+        view.findViewById<EditText>(R.id.search_bar).setOnFocusChangeListener{ _, hasFocus->
+            if(hasFocus) {
+                findNavController().navigate(
+                    HomePageFragmentDirections.actionHomePageFragmentToSearchBarFragment()
+                )
+            }
+        }
     }
 
     private fun initOnClickButton(view: View) {
