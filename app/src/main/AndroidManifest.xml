@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.4AL2AndroidGrp2"
-        tools:targetApi="21">
+        tools:targetApi="33">
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
