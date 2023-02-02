@@ -27,10 +27,10 @@ class GameInfoViewHolder(itemView: View, val action_destination: Int) : Recycler
 
         val button = itemView.findViewById<Button>(R.id.game_detail)
         button.setOnClickListener {
-            val action = action_destination.toBundle().apply {
+            /*val action = action_destination.toBundle().apply {
                 putString("game_id", game.steam_appid)
             }
-            Navigation.findNavController(itemView).navigate(action_destination, action)
+            Navigation.findNavController(itemView).navigate(action_destination, action)*/
         }
 
         val view = itemView.findViewById<View>(R.id.background_image)
