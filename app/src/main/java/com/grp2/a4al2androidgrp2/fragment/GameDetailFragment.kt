@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,10 +59,9 @@ class GameDetailFragment: Fragment() {
         gameId = arguments?.getInt("gameId") ?: 0
         return_destination = arguments?.getInt("return_destination") ?: 0
         initGameDetailViewModel()
-        initAllOnClickListener(view)
         initGameOpinionsViewModel()
         initSteamAccountViewModel()
-        getUser()
+        getUser(view)
         gameDetailViewModel.getGameDetail(gameId, Locale.getDefault().language)
         gameOpinionsViewModel.getGameOpinions(gameId, Locale.getDefault().language)
         initOnClickButton(view)
@@ -117,13 +117,13 @@ class GameDetailFragment: Fragment() {
         }
     }
 
-    private fun getUser() {
-        val sharedPref: SharedPreferences = requireActivity().getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+    private fun getUser(view: View) {
+        val sharedPref: SharedPreferences = requireActivity().getPreferences(0)
         if (!sharedPref.contains("token")) {
             launchLogin()
         }
         token = sharedPref.getString("token", "")!!
-        initMeViewModel()
+        initMeViewModel(view)
         meViewModel.me(token)
     }
 
@@ -175,7 +175,7 @@ class GameDetailFragment: Fragment() {
         }
     }
 
-    private fun initMeViewModel() {
+    private fun initMeViewModel(view: View) {
         meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
         meViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it == null) {
@@ -183,6 +183,7 @@ class GameDetailFragment: Fragment() {
             } else {
                 account = it
                 checkLikeAndWishList()
+                initAllOnClickListener(view)
             }
         }
     }
