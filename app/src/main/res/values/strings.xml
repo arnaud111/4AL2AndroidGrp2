@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">4AL2AndroidGrp2</string>
+    <string name="app_name" translatable="false">4AL2AndroidGrp2</string>
 
     <string name="login_title">Bienvenue !</string>
     <string name="login_subtitle">Veuillez vous connecter ou\n créer un nouveau compte\n pour utiliser l\'application.</string>
