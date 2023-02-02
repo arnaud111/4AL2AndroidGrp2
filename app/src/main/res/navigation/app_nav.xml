@@ -82,9 +82,11 @@
         <action
             android:id="@+id/action_gameDetailFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />
-        <argument
-            android:name="gameId"
-            app:argType="integer"
-            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_likeListFragment"
+            app:destination="@id/likeListFragment" />
     </fragment>
 </navigation>

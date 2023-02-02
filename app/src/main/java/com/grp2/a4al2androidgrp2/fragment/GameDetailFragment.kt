@@ -35,6 +35,7 @@ class GameDetailFragment: Fragment() {
 
     var index = 0
     var gameId = 0
+    var return_destination = 0
     var description_displayed = true
     lateinit var account: Account
     lateinit var meViewModel: MeViewModel
@@ -54,7 +55,8 @@ class GameDetailFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.game_detail, container, false)
-        gameId = 0
+        gameId = arguments?.getInt("gameId") ?: 0
+        return_destination = arguments?.getInt("return_destination") ?: 0
         initGameDetailViewModel()
         initAllOnClickListener(view)
         initGameOpinionsViewModel()
@@ -111,9 +113,7 @@ class GameDetailFragment: Fragment() {
         initOnClickOpinion(view)
         initOnClickDescription(view)
         view.findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
-            findNavController().navigate(
-                GameDetailFragmentDirections.actionGameDetailFragmentToHomePageFragment()
-            )
+            findNavController().navigate(return_destination)
         }
     }
 

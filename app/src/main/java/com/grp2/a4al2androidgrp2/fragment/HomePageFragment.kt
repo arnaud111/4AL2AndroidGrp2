@@ -91,7 +91,7 @@ class HomePageFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail, R.id.action_homePageFragment_to_gameDetailFragment)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_homePageFragment_to_gameDetailFragment, R.id.action_gameDetailFragment_to_homePageFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())

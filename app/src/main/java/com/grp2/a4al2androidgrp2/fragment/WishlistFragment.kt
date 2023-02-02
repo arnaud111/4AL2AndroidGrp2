@@ -25,7 +25,6 @@ class WishlistFragment: Fragment() {
     lateinit var gameDetailViewModel: GameDetailViewModel
     lateinit var account: Account
     var gamesDetail: MutableList<GameInfo> = arrayListOf()
-    var context = this
     var language = Locale.getDefault().language
     var index = 0
 
@@ -81,7 +80,7 @@ class WishlistFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail, R.id.action_wishlistFragment_to_gameDetailFragment)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_wishlistFragment_to_gameDetailFragment, R.id.action_gameDetailFragment_to_wishlistFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(view.context)
