@@ -1,25 +1,18 @@
-package com.grp2.a4al2androidgrp2
+package com.grp2.a4al2androidgrp2.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.grp2.a4al2androidgrp2.R
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
-import com.grp2.a4al2androidgrp2.dto.account.Account
-import com.grp2.a4al2androidgrp2.dto.account.LoginToken
 import com.grp2.a4al2androidgrp2.viewmodel.auth.LoginViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.auth.SubscribeViewModel
-import okhttp3.internal.cache2.Relay.Companion.edit
 
 
 class SubscribeFragment : Fragment() {

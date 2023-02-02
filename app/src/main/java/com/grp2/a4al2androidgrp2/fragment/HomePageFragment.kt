@@ -1,10 +1,11 @@
-package com.grp2.a4al2androidgrp2
+package com.grp2.a4al2androidgrp2.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -12,16 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.GameInfo
-import com.grp2.a4al2androidgrp2.dto.game.GameMostPlayedResponse
 import com.grp2.a4al2androidgrp2.viewmodel.steam.GameDetailViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.steam.GameMostPlayedViewModel
 import java.util.*
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.grp2.a4al2androidgrp2.R
 import com.grp2.a4al2androidgrp2.adapter.GameInfoAdapter
-import com.grp2.a4al2androidgrp2.dto.game.GameResponse
 
 class HomePageFragment: Fragment() {
     lateinit var gameMostPlayedViewModel: GameMostPlayedViewModel
@@ -38,15 +37,25 @@ class HomePageFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println("Guys, we are in")
         if (!activity?.getPreferences(0)?.contains("token")!!) {
             findNavController().navigate(
-                SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
+                HomePageFragmentDirections.actionHomePageFragmentToLoginFragment()
             )
         }
         initGameMostPlayedViewModel()
         gameMostPlayedViewModel.getGameMostPlayed(language)
-        return inflater.inflate(R.layout.homepage, container, false)
+        val view = inflater.inflate(R.layout.homepage, container, false)
+        initOnClickButton(view)
+        return view
+    }
+
+    private fun initOnClickButton(view: View) {
+        view.findViewById<ImageButton>(R.id.wishlist).setOnClickListener {
+            launchWishlist()
+        }
+        view.findViewById<ImageButton>(R.id.likelist).setOnClickListener {
+            launchLikelist()
+        }
     }
 
     private fun initGameMostPlayedViewModel() {
@@ -54,7 +63,7 @@ class HomePageFragment: Fragment() {
         gameMostPlayedViewModel.getGameMostPlayedObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 findNavController().navigate(
-                    SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
+                    HomePageFragmentDirections.actionHomePageFragmentToLoginFragment()
                 )
             } else {
                 it.response.ranks.forEach { game ->
@@ -107,5 +116,17 @@ class HomePageFragment: Fragment() {
                     gameDetailViewModel.getGameDetail(gamesMostPlayed[index], language)
             }
         }
+    }
+
+    private fun launchWishlist() {
+        findNavController().navigate(
+            HomePageFragmentDirections.actionHomePageFragmentToWishlistFragment()
+        )
+    }
+
+    private fun launchLikelist() {
+        findNavController().navigate(
+            HomePageFragmentDirections.actionHomePageFragmentToLikeListFragment()
+        )
     }
 }

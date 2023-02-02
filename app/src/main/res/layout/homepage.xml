@@ -35,7 +35,7 @@
                 android:src="@drawable/like"
                 android:background="@color/background_grey"
                 android:padding="16dp"
-                android:onClick="launchLikedGames"/>
+                android:id="@+id/likelist"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                 android:src="@drawable/wishlist"
                 android:background="@color/background_grey"
                 android:padding="16dp"
-                android:onClick="launchWishlist"/>
+                android:id="@+id/wishlist"/>
 
         </LinearLayout>
 
