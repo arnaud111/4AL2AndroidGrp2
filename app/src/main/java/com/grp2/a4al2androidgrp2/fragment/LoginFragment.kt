@@ -55,9 +55,9 @@ class LoginFragment : Fragment() {
         meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
         meViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
-                /*findNavController().navigate(
+                findNavController().navigate(
                     LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
-                )*/
+                )
             }
         }
     }

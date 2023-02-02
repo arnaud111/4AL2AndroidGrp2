@@ -74,7 +74,7 @@ class SubscribeFragment : Fragment() {
 
     private fun initSubscribeViewModel() {
         subscribeViewModel = ViewModelProvider(this)[SubscribeViewModel::class.java]
-        subscribeViewModel.getAccountObserver().observe(this) {
+        subscribeViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 Toast.makeText(requireContext(), "Failed to subscribe", Toast.LENGTH_LONG).show()
             } else {
@@ -98,18 +98,14 @@ class SubscribeFragment : Fragment() {
 
     private fun initLoginViewModel() {
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        loginViewModel.getLoginTokenObserver().observe(this) {
+        loginViewModel.getLoginTokenObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 Toast.makeText(requireContext(), "Failed to login", Toast.LENGTH_LONG).show()
                 findNavController().navigate(
                     SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
                 )
             } else {
-                val sharedPref = requireActivity().getSharedPreferences(
-                    "token_pref",
-                    AppCompatActivity.MODE_PRIVATE
-                )
-                val editor = sharedPref.edit()
+                val editor = requireActivity().getPreferences(0).edit()
                 editor.putString("token", it.token)
                 editor.apply()
 
