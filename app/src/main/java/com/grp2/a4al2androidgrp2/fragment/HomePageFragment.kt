@@ -8,8 +8,10 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.GameInfo
@@ -106,11 +108,13 @@ class HomePageFragment: Fragment() {
                 view.findViewById<TextView>(R.id.description).text = description
 
                 view.findViewById<Button>(R.id.main_detail).setOnClickListener {
-                    //TODO: Navigate to gamedetail fragment with id in bundle
-                    /*val intent = Intent(this, GameDetailActivity::class.java)
-                    intent.putExtra("game_id", gamesDetail[0].steam_appid)
-                    startActivity(intent)*/
+                    val action = bundleOf(
+                        "gameId" to gamesDetail[0].steam_appid,
+                        "return_destination" to R.id.action_gameDetailFragment_to_homePageFragment
+                    )
+                    Navigation.findNavController(view).navigate(R.id.action_homePageFragment_to_gameDetailFragment, action)
                 }
+
 
                 index += 1
                 if (index < gamesMostPlayed.size && index < MAX_SHOWN_GAMES)
