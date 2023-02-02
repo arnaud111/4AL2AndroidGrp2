@@ -21,6 +21,8 @@ class GameInfoViewHolder(itemView: View, val action_destination: Int, val return
         itemView.findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
         if (!game.is_free && game.price_overview != null) {
             itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
+        }else{
+            itemView.findViewById<TextView>(R.id.game_price).setText(R.string.free)
         }
         Glide.with(itemView)
             .load(game.header_image) // "https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_appid}/library_600x900.jpg"

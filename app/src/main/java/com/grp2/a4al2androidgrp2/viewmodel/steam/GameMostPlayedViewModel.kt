@@ -12,13 +12,13 @@ import retrofit2.Response
 
 class GameMostPlayedViewModel: ViewModel() {
 
-    lateinit var gameMostPlayedLiveDate: MutableLiveData<GameMostPlayedResponse?>
+    lateinit var gameMostPlayedLiveData: MutableLiveData<GameMostPlayedResponse?>
     init {
-        gameMostPlayedLiveDate = MutableLiveData();
+        gameMostPlayedLiveData = MutableLiveData();
     }
 
     fun getGameMostPlayedObserver(): MutableLiveData<GameMostPlayedResponse?> {
-        return gameMostPlayedLiveDate;
+        return gameMostPlayedLiveData;
     }
 
     fun getGameMostPlayed(lang: String) {
