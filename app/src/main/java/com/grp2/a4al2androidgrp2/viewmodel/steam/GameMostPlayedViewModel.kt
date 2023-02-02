@@ -27,14 +27,14 @@ class GameMostPlayedViewModel: ViewModel() {
         call.enqueue(object: Callback<GameMostPlayedResponse> {
             override fun onResponse(call: Call<GameMostPlayedResponse>, response: Response<GameMostPlayedResponse>) {
                 if (response.isSuccessful) {
-                    gameMostPlayedLiveDate.postValue(response.body())
+                    gameMostPlayedLiveData.postValue(response.body())
                 } else {
-                    gameMostPlayedLiveDate.postValue(null);
+                    gameMostPlayedLiveData.postValue(null);
                 }
             }
 
             override fun onFailure(call: Call<GameMostPlayedResponse>, t: Throwable) {
-                gameMostPlayedLiveDate.postValue(null)
+                gameMostPlayedLiveData.postValue(null)
             }
         })
     }

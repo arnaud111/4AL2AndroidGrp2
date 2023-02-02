@@ -15,8 +15,7 @@
         app:title="@string/search"
         android:elevation="100dp"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/close"
-        android:onClick="launchHomepage"/>
+        app:navigationIcon="@drawable/close"/>
 
     <LinearLayout
         android:layout_width="match_parent"
