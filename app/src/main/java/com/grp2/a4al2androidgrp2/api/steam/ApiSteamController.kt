@@ -14,4 +14,7 @@ interface ApiSteamController {
     @GET("/steamApi/getMostPlayedGames/{lang}")
     fun getGameMostPlayed(@Path("lang") lang: String) : Call<GameMostPlayedResponse>
 
+    @GET("/steamApi/searchGames/{searched}/{lang}")
+    fun searchGames(@Path("searched") searched: String, @Path("lang") lang: String) : Call<Map<String, GameResponse>>
+
 }

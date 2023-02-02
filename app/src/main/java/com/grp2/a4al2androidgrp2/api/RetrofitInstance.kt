@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitInstance {
 
     companion object {
-        val BASE_URL = "http://192.168.1.186:7589";
+        val BASE_URL = "http://scolsoutien.fr:7589";
 
         fun getRetrofitInstance(token: String = ""): Retrofit {
             val okHttpClient = OkHttpClient.Builder()

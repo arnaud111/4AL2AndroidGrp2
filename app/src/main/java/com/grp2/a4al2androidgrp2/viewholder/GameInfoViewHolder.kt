@@ -18,6 +18,8 @@ class GameInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
         if (!game.is_free && game.price_overview != null) {
             itemView.findViewById<TextView>(R.id.game_price).text = game.price_overview.final_formatted
+        }else{
+            itemView.findViewById<TextView>(R.id.game_price).setText(R.string.free)
         }
         Glide.with(itemView)
             .load(game.header_image)

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -33,7 +34,7 @@ class HomepageActivity : AppCompatActivity()  {
     var context = this
     var language = Locale.getDefault().language
     var index = 0;
-    val MAX_SHOWN_GAMES = 50
+    val MAX_SHOWN_GAMES = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +43,10 @@ class HomepageActivity : AppCompatActivity()  {
         if (!sharedPref.contains("token")) {
             launchLogin()
         }
+
         initGameMostPlayedViewModel()
         gameMostPlayedViewModel.getGameMostPlayed(language)
+        initOnFocus()
     }
 
     private fun initGameMostPlayedViewModel() {
@@ -53,7 +56,6 @@ class HomepageActivity : AppCompatActivity()  {
                 launchLogin()
             } else {
                 it.response.ranks.forEach { game ->
-                    //TODO mettre les prix payants
                     gamesMostPlayed.add(game.appid)
                 }
                 initGameDetailViewModel()
@@ -79,6 +81,7 @@ class HomepageActivity : AppCompatActivity()  {
                 val recyclerView = findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(context)
+               // recyclerView.adapter?.notifyItemInserted(gamesDetail.size - 1)
                 Glide.with(this)
                     .load(gamesDetail[0].background_raw)
                     .into(findViewById<ImageView>(R.id.background_image))
@@ -86,13 +89,21 @@ class HomepageActivity : AppCompatActivity()  {
                     .load(gamesDetail[0].header_image)
                     .into(findViewById<ImageView>(R.id.header_image))
                 findViewById<TextView>(R.id.title).text = gamesDetail[0].name
-                var description: String = gamesDetail[0].short_description.slice(0..100) + "..."
+                val description: String = gamesDetail[0].short_description.slice(0..100) + "..."
                 findViewById<TextView>(R.id.description).text = description
                 index += 1
                 if (index < gamesMostPlayed.size && index < MAX_SHOWN_GAMES)
                     gameDetailViewModel.getGameDetail(gamesMostPlayed[index], language)
             }
         })
+    }
+
+    private fun initOnFocus(){
+        findViewById<EditText>(R.id.search_bar).setOnFocusChangeListener{ _,hasFocus->
+            if(hasFocus) {
+                launchSearchActivity()
+            }
+        }
     }
 
     private fun launchLogin() {
@@ -103,6 +114,11 @@ class HomepageActivity : AppCompatActivity()  {
 
     fun launchLikedGames(view: View) {
         val intent = Intent(this, LikedGamesActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun launchSearchActivity() {
+        val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
     }
 
