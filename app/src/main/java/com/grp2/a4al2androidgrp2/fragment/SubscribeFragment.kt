@@ -23,8 +23,11 @@ class SubscribeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println("Guys, we are in subscribe")
-        return inflater.inflate(R.layout.subscribe_activity, container, false)
+        val view = inflater.inflate(R.layout.subscribe_activity, container, false)
+        view.findViewById<Button>(R.id.subscribe).setOnClickListener {
+            subscribe(view)
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
