@@ -80,21 +80,22 @@ class HomePageFragment: Fragment() {
                         gamesDetail.add(game.value.data)
                     }
                 }
+                val view = requireView()
                 val adapter = GameInfoAdapter(gamesDetail)
-                val recyclerView = requireView().findViewById<RecyclerView>(R.id.games_list)
+                val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 Glide.with(this)
                     .load(gamesDetail[0].background_raw)
-                    .into(requireView().findViewById<ImageView>(R.id.background_image))
+                    .into(view.findViewById<ImageView>(R.id.background_image))
                 Glide.with(this)
                     .load(gamesDetail[0].header_image)
-                    .into(requireView().findViewById<ImageView>(R.id.header_image))
-                requireView().findViewById<TextView>(R.id.title).text = gamesDetail[0].name
+                    .into(view.findViewById<ImageView>(R.id.header_image))
+                view.findViewById<TextView>(R.id.title).text = gamesDetail[0].name
                 var description: String = gamesDetail[0].short_description.slice(0..100) + "..."
-                requireView().findViewById<TextView>(R.id.description).text = description
+                view.findViewById<TextView>(R.id.description).text = description
 
-                requireView().findViewById<Button>(R.id.main_detail).setOnClickListener {
+                view.findViewById<Button>(R.id.main_detail).setOnClickListener {
                     //TODO: Navigate to gamedetail fragment with id in bundle
                     /*val intent = Intent(this, GameDetailActivity::class.java)
                     intent.putExtra("game_id", gamesDetail[0].steam_appid)
