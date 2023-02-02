@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_homePageFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -85,10 +88,23 @@
         <action
             android:id="@+id/action_gameDetailFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />
-        <argument
-            android:name="gameId"
-            app:argType="integer"
-            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_likeListFragment"
+            app:destination="@id/likeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBarFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.SearchBarFragment"
+        android:label="SearchBarFragment" >
+        <action
+            android:id="@+id/action_searchBarFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_searchBarFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgottenPasswordFragment"

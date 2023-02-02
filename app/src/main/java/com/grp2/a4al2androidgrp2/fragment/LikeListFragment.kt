@@ -58,14 +58,14 @@ class LikeListFragment: Fragment() {
             if (it == null) {
                 launchLogin()
             } else {
-                if (it.wishlist.isNotEmpty()) {
+                if (it.likes.isNotEmpty()) {
                     account = it
                     initGameDetailViewModel()
-                    gameDetailViewModel.getGameDetail(it.wishlist[index], language)
+                    gameDetailViewModel.getGameDetail(it.likes[index], language)
                 } else {
                     val view = requireView()
                     view.findViewById<RecyclerView>(R.id.games_list).visibility = View.GONE
-                    view.findViewById<ViewStub>(R.id.empty_wishlist).visibility = View.VISIBLE
+                    view.findViewById<ViewStub>(R.id.empty_likes).visibility = View.VISIBLE
                 }
             }
         }
@@ -81,13 +81,13 @@ class LikeListFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail, R.id.action_likeListFragment_to_gameDetailFragment)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_likeListFragment_to_gameDetailFragment, R.id.action_gameDetailFragment_to_likeListFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(view.context)
                 index += 1
-                if (index < account.wishlist.size)
-                    gameDetailViewModel.getGameDetail(account.wishlist[index], language)
+                if (index < account.likes.size)
+                    gameDetailViewModel.getGameDetail(account.likes[index], language)
             }
         }
     }

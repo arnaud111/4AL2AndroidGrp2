@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.GameInfo
@@ -28,9 +27,8 @@ class HomePageFragment: Fragment() {
     lateinit var account: Account
     var gamesDetail: MutableList<GameInfo> = arrayListOf()
     var gamesMostPlayed: MutableList<Int> = arrayListOf()
-    var context = this
     var language = Locale.getDefault().language
-    var index = 0;
+    var index = 0
     val MAX_SHOWN_GAMES = 50
 
     override fun onCreateView(
@@ -47,7 +45,18 @@ class HomePageFragment: Fragment() {
         gameMostPlayedViewModel.getGameMostPlayed(language)
         val view = inflater.inflate(R.layout.homepage, container, false)
         initOnClickButton(view)
+        initOnFocus(view)
         return view
+    }
+
+    private fun initOnFocus(view: View){
+        view.findViewById<EditText>(R.id.search_bar).setOnFocusChangeListener{ _, hasFocus->
+            if(hasFocus) {
+                findNavController().navigate(
+                    HomePageFragmentDirections.actionHomePageFragmentToSearchBarFragment()
+                )
+            }
+        }
     }
 
     private fun initOnClickButton(view: View) {
@@ -91,7 +100,7 @@ class HomePageFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail, R.id.action_homePageFragment_to_gameDetailFragment)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_homePageFragment_to_gameDetailFragment, R.id.action_gameDetailFragment_to_homePageFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -106,11 +115,13 @@ class HomePageFragment: Fragment() {
                 view.findViewById<TextView>(R.id.description).text = description
 
                 view.findViewById<Button>(R.id.main_detail).setOnClickListener {
-                    //TODO: Navigate to gamedetail fragment with id in bundle
-                    /*val intent = Intent(this, GameDetailActivity::class.java)
-                    intent.putExtra("game_id", gamesDetail[0].steam_appid)
-                    startActivity(intent)*/
+                    val action = bundleOf(
+                        "gameId" to gamesDetail[0].steam_appid,
+                        "return_destination" to R.id.action_gameDetailFragment_to_homePageFragment
+                    )
+                    Navigation.findNavController(view).navigate(R.id.action_homePageFragment_to_gameDetailFragment, action)
                 }
+
 
                 index += 1
                 if (index < gamesMostPlayed.size && index < MAX_SHOWN_GAMES)
