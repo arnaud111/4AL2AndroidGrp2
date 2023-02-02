@@ -81,7 +81,7 @@ class WishlistFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_wishlistFragment_to_gameDetailFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(view.context)

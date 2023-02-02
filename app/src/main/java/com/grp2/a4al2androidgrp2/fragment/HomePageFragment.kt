@@ -32,6 +32,7 @@ class HomePageFragment: Fragment() {
     var language = Locale.getDefault().language
     var index = 0;
     val MAX_SHOWN_GAMES = 50
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,7 +91,7 @@ class HomePageFragment: Fragment() {
                     }
                 }
                 val view = requireView()
-                val adapter = GameInfoAdapter(gamesDetail)
+                val adapter = GameInfoAdapter(gamesDetail, R.id.action_homePageFragment_to_gameDetailFragment)
                 val recyclerView = view.findViewById<RecyclerView>(R.id.games_list)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())

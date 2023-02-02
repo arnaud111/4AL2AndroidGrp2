@@ -7,11 +7,11 @@ import com.grp2.a4al2androidgrp2.R
 import com.grp2.a4al2androidgrp2.dto.game.GameInfo
 import com.grp2.a4al2androidgrp2.viewholder.GameInfoViewHolder
 
-class GameInfoAdapter(private val games: List<GameInfo>) : RecyclerView.Adapter<GameInfoViewHolder>() {
+class GameInfoAdapter(private val games: List<GameInfo>, private val action_destination: Int) : RecyclerView.Adapter<GameInfoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameInfoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.game_info_item, parent, false)
-        return GameInfoViewHolder(view)
+        return GameInfoViewHolder(view, action_destination)
     }
 
     override fun onBindViewHolder(holder: GameInfoViewHolder, position: Int) {
