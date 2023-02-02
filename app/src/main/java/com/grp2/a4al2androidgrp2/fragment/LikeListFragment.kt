@@ -58,10 +58,10 @@ class LikeListFragment: Fragment() {
             if (it == null) {
                 launchLogin()
             } else {
-                if (it.wishlist.isNotEmpty()) {
+                if (it.likes.isNotEmpty()) {
                     account = it
                     initGameDetailViewModel()
-                    gameDetailViewModel.getGameDetail(it.wishlist[index], language)
+                    gameDetailViewModel.getGameDetail(it.likes[index], language)
                 } else {
                     val view = requireView()
                     view.findViewById<RecyclerView>(R.id.games_list).visibility = View.GONE
@@ -86,8 +86,8 @@ class LikeListFragment: Fragment() {
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(view.context)
                 index += 1
-                if (index < account.wishlist.size)
-                    gameDetailViewModel.getGameDetail(account.wishlist[index], language)
+                if (index < account.likes.size)
+                    gameDetailViewModel.getGameDetail(account.likes[index], language)
             }
         }
     }

@@ -30,9 +30,8 @@ class HomePageFragment: Fragment() {
     lateinit var account: Account
     var gamesDetail: MutableList<GameInfo> = arrayListOf()
     var gamesMostPlayed: MutableList<Int> = arrayListOf()
-    var context = this
     var language = Locale.getDefault().language
-    var index = 0;
+    var index = 0
     val MAX_SHOWN_GAMES = 50
 
     override fun onCreateView(
