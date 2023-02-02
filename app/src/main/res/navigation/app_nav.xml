@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.HomePageFragment"
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_likeListFragment"
+            app:destination="@id/likeListFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_searchBarFragment"
+            app:destination="@id/searchBarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.LoginFragment"
+        android:label="login_main"
+        tools:layout="@layout/login_main" >
+        <action
+            android:id="@+id/action_loginFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_subscribeFragment"
+            app:destination="@id/subscribeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotten_password"
+            app:destination="@id/forgottenPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subscribeFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.SubscribeFragment"
+        android:label="SubscribeFragment" >
+        <action
+            android:id="@+id/action_subscribeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_subscribeFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.WishlistFragment"
+        android:label="WishlistFragment" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_wishlistFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/likeListFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.LikeListFragment"
+        android:label="LikeListFragment" >
+        <action
+            android:id="@+id/action_likeListFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_likeListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_likeListFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.GameDetailFragment"
+        android:label="GameDetailFragment" >
+        <action
+            android:id="@+id/action_gameDetailFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_likeListFragment"
+            app:destination="@id/likeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBarFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.SearchBarFragment"
+        android:label="SearchBarFragment" >
+        <action
+            android:id="@+id/action_searchBarFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_searchBarFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgottenPasswordFragment"
+        android:name="com.grp2.a4al2androidgrp2.fragment.ForgottenPasswordFragment"
+        android:label="ForgottenPasswordFragment" >
+        <action
+            android:id="@+id/action_forgottenPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+</navigation>

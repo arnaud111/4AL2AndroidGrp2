@@ -1,43 +1,42 @@
-package com.grp2.a4al2androidgrp2
+package com.grp2.a4al2androidgrp2.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.grp2.a4al2androidgrp2.R
 import com.grp2.a4al2androidgrp2.api.auth.request.LoginRequest
 import com.grp2.a4al2androidgrp2.api.auth.request.SubscribeRequest
-import com.grp2.a4al2androidgrp2.dto.account.Account
-import com.grp2.a4al2androidgrp2.dto.account.LoginToken
 import com.grp2.a4al2androidgrp2.viewmodel.auth.LoginViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.auth.SubscribeViewModel
 
-class SubscribeActivity: AppCompatActivity() {
 
+class SubscribeFragment : Fragment() {
     lateinit var loginViewModel: LoginViewModel
     lateinit var subscribeViewModel: SubscribeViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.subscribe_activity)
-        this.popup()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.subscribe_activity, container, false)
+        view.findViewById<Button>(R.id.subscribe).setOnClickListener {
+            subscribe(view)
+        }
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        this.popup()
+    }
     @SuppressLint("ClickableViewAccessibility")
     fun popup() {
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView = inflater.inflate(R.layout.popup_password, null)
+        val popupView = layoutInflater.inflate(R.layout.popup_password, null)
         val popupWindow = PopupWindow(
             popupView,
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -45,7 +44,7 @@ class SubscribeActivity: AppCompatActivity() {
             true
         )
 
-        val passwordField = findViewById<EditText>(R.id.password)
+        val passwordField = requireView().findViewById<EditText>(R.id.password)
         passwordField.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= passwordField.right - passwordField.compoundDrawables[2].bounds.width()) {
@@ -58,10 +57,10 @@ class SubscribeActivity: AppCompatActivity() {
     }
 
     fun subscribe(view: View) {
-        val username = findViewById<EditText>(R.id.username)
-        val email = findViewById<EditText>(R.id.email)
-        val password = findViewById<EditText>(R.id.password)
-        val confirmPassword = findViewById<EditText>(R.id.confirm_password)
+        val username = view.findViewById<EditText>(R.id.username)
+        val email = view.findViewById<EditText>(R.id.email)
+        val password = view.findViewById<EditText>(R.id.password)
+        val confirmPassword = view.findViewById<EditText>(R.id.confirm_password)
 
         if (!this.checkSubscribeInfo(username, email, password, confirmPassword)) {
             initSubscribeViewModel()
@@ -74,32 +73,20 @@ class SubscribeActivity: AppCompatActivity() {
     }
 
     private fun initSubscribeViewModel() {
-        subscribeViewModel = ViewModelProvider(this).get(SubscribeViewModel::class.java)
-        subscribeViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        subscribeViewModel = ViewModelProvider(this)[SubscribeViewModel::class.java]
+        subscribeViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it == null) {
-                Toast.makeText(this@SubscribeActivity, "Failed to subscribe", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to subscribe", Toast.LENGTH_LONG).show()
             } else {
                 loginRequest()
             }
-        })
-    }
-
-    private fun launchHomePage() {
-        val intent = Intent(this, HomepageActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun launchLoginPage() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        }
     }
 
     private fun loginRequest() {
 
-        val email = findViewById<EditText>(R.id.email)
-        val password = findViewById<EditText>(R.id.password)
+        val email = requireView().findViewById<EditText>(R.id.email)
+        val password = requireView().findViewById<EditText>(R.id.password)
 
         initLoginViewModel();
         val loginRequest = LoginRequest(
@@ -110,20 +97,23 @@ class SubscribeActivity: AppCompatActivity() {
     }
 
     private fun initLoginViewModel() {
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        loginViewModel.getLoginTokenObserver().observe(this, Observer<LoginToken?> {
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        loginViewModel.getLoginTokenObserver().observe(viewLifecycleOwner) {
             if (it == null) {
-                Toast.makeText(this@SubscribeActivity, "Failed to login", Toast.LENGTH_LONG).show()
-                launchLoginPage()
+                Toast.makeText(requireContext(), "Failed to login", Toast.LENGTH_LONG).show()
+                findNavController().navigate(
+                    SubscribeFragmentDirections.actionSubscribeFragmentToLoginFragment()
+                )
             } else {
-                val sharedPref: SharedPreferences = getSharedPreferences("token_pref", MODE_PRIVATE)
-                val editor = sharedPref.edit()
+                val editor = requireActivity().getPreferences(0).edit()
                 editor.putString("token", it.token)
                 editor.apply()
 
-                launchHomePage()
+                findNavController().navigate(
+                    SubscribeFragmentDirections.actionSubscribeFragmentToHomePageFragment()
+                )
             }
-        })
+        }
     }
 
     private fun checkSubscribeInfo(username: EditText, email: EditText, password: EditText, confirmPassword: EditText): Boolean {

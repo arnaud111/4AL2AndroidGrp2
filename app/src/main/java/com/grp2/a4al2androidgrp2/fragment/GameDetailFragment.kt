@@ -1,26 +1,27 @@
-package com.grp2.a4al2androidgrp2
+package com.grp2.a4al2androidgrp2.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.grp2.a4al2androidgrp2.R
 import com.grp2.a4al2androidgrp2.adapter.GameOpinionAdapter
 import com.grp2.a4al2androidgrp2.dto.account.Account
 import com.grp2.a4al2androidgrp2.dto.game.*
@@ -30,10 +31,11 @@ import com.grp2.a4al2androidgrp2.viewmodel.steam.GameOpinionsViewModel
 import com.grp2.a4al2androidgrp2.viewmodel.steam.SteamAccountViewModel
 import java.util.*
 
-class GameDetailActivity : AppCompatActivity() {
+class GameDetailFragment: Fragment() {
 
     var index = 0
     var gameId = 0
+    var return_destination = 0
     var description_displayed = true
     lateinit var account: Account
     lateinit var meViewModel: MeViewModel
@@ -47,35 +49,44 @@ class GameDetailActivity : AppCompatActivity() {
     lateinit var token: String
     lateinit var opinionList: List<GameOpinion>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.game_detail)
-        gameId = intent.getIntExtra("game_id", 0)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.game_detail, container, false)
+        gameId = arguments?.getInt("gameId") ?: 0
+        return_destination = arguments?.getInt("return_destination") ?: 0
         initGameDetailViewModel()
-        gameDetailViewModel.getGameDetail(gameId, Locale.getDefault().language)
-        getUser()
-        initAllOnClickListener()
+        initAllOnClickListener(view)
         initGameOpinionsViewModel()
         initSteamAccountViewModel()
+        getUser()
+        gameDetailViewModel.getGameDetail(gameId, Locale.getDefault().language)
         gameOpinionsViewModel.getGameOpinions(gameId, Locale.getDefault().language)
-        findViewById<TextView>(R.id.description).movementMethod = ScrollingMovementMethod()
+        initOnClickButton(view)
+        return view
+    }
+
+    private fun initOnClickButton(view: View) {
+        view.findViewById<TextView>(R.id.description).movementMethod = ScrollingMovementMethod()
     }
 
     private fun initGameOpinionsViewModel() {
         gameOpinionsViewModel = ViewModelProvider(this).get(GameOpinionsViewModel::class.java)
-        gameOpinionsViewModel.getGameOpinionsObserver().observe(this, Observer<GameOpinionsResponse?> {
+        gameOpinionsViewModel.getGameOpinionsObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 opinionList = it.reviews
                 if (opinionList.size > 0) {
                     steamAccountViewModel.getPlayerPseudo(opinionList[index].author.steamid)
                 }
             }
-        })
+        }
     }
 
     private fun initSteamAccountViewModel() {
         steamAccountViewModel = ViewModelProvider(this).get(SteamAccountViewModel::class.java)
-        steamAccountViewModel.getSteamAccountObserver().observe(this, Observer<SteamAccount?> {
+        steamAccountViewModel.getSteamAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 opinionList[index].author.pseudo = it.pseudo
                 index += 1
@@ -85,26 +96,29 @@ class GameDetailActivity : AppCompatActivity() {
                     displayOpinion()
                 }
             }
-        })
+        }
     }
 
     private fun displayOpinion() {
+        val view = requireView()
         val adapter = GameOpinionAdapter(opinionList)
-        val recyclerView = findViewById<RecyclerView>(R.id.opinion_list)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.opinion_list)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun initAllOnClickListener() {
-        initOnClickLike()
-        initOnClickWish()
-        initOnClickOpinion()
-        initOnClickDescription()
-        findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener { finish() }
+    private fun initAllOnClickListener(view: View) {
+        initOnClickLike(view)
+        initOnClickWish(view)
+        initOnClickOpinion(view)
+        initOnClickDescription(view)
+        view.findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
+            findNavController().navigate(return_destination)
+        }
     }
 
     private fun getUser() {
-        val sharedPref: SharedPreferences = getSharedPreferences("token_pref", Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = requireActivity().getSharedPreferences("token_pref", Context.MODE_PRIVATE)
         if (!sharedPref.contains("token")) {
             launchLogin()
         }
@@ -113,32 +127,32 @@ class GameDetailActivity : AppCompatActivity() {
         meViewModel.me(token)
     }
 
-    private fun initOnClickOpinion() {
-        findViewById<Button>(R.id.opinion_button).setOnClickListener {
+    private fun initOnClickOpinion(view: View) {
+        view.findViewById<Button>(R.id.opinion_button).setOnClickListener {
             if (description_displayed) {
-                findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.border_button)
-                findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_full)
-                findViewById<RecyclerView>(R.id.opinion_list).visibility = View.VISIBLE
-                findViewById<TextView>(R.id.description).visibility = View.GONE
+                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_detail_description_empty)
+                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_detail_opinion_full)
+                view.findViewById<RecyclerView>(R.id.opinion_list).visibility = View.VISIBLE
+                view.findViewById<TextView>(R.id.description).visibility = View.GONE
                 description_displayed = false
             }
         }
     }
 
-    private fun initOnClickDescription() {
-        findViewById<Button>(R.id.description_button).setOnClickListener {
+    private fun initOnClickDescription(view: View) {
+        view.findViewById<Button>(R.id.description_button).setOnClickListener {
             if (!description_displayed) {
-                findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_full)
-                findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.border_button)
-                findViewById<TextView>(R.id.description).visibility = View.VISIBLE
-                findViewById<RecyclerView>(R.id.opinion_list).visibility = View.GONE
+                view.findViewById<Button>(R.id.description_button).setBackgroundResource(R.drawable.button_detail_description_full)
+                view.findViewById<Button>(R.id.opinion_button).setBackgroundResource(R.drawable.button_detail_opinion_empty)
+                view.findViewById<TextView>(R.id.description).visibility = View.VISIBLE
+                view.findViewById<RecyclerView>(R.id.opinion_list).visibility = View.GONE
                 description_displayed = true
             }
         }
     }
 
-    private fun initOnClickLike() {
-        findViewById<ImageView>(R.id.like).setOnClickListener {
+    private fun initOnClickLike(view: View) {
+        view.findViewById<ImageView>(R.id.like).setOnClickListener {
             if (gameId in account.likes) {
                 initRemoveLikeViewModel()
                 removeLikeViewModel.removeLike(token, gameId)
@@ -149,8 +163,8 @@ class GameDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun initOnClickWish() {
-        findViewById<ImageView>(R.id.wishlist).setOnClickListener {
+    private fun initOnClickWish(view: View) {
+        view.findViewById<ImageView>(R.id.wishlist).setOnClickListener {
             if (gameId in account.wishlist) {
                 initRemoveWishViewModel()
                 removeWishViewModel.removeWish(token, gameId)
@@ -163,72 +177,73 @@ class GameDetailActivity : AppCompatActivity() {
 
     private fun initMeViewModel() {
         meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
-        meViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        meViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 launchLogin()
             } else {
                 account = it
                 checkLikeAndWishList()
             }
-        })
+        }
     }
 
     private fun initAddLikeViewModel() {
         addLikeViewModel = ViewModelProvider(this).get(AddLikeViewModel::class.java)
-        addLikeViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        addLikeViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 account = it
                 checkLikeAndWishList()
             }
-        })
+        }
     }
 
     private fun initRemoveLikeViewModel() {
         removeLikeViewModel = ViewModelProvider(this).get(RemoveLikeViewModel::class.java)
-        removeLikeViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        removeLikeViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 account = it
                 checkLikeAndWishList()
             }
-        })
+        }
     }
 
     private fun initAddWishViewModel() {
         addWishViewModel = ViewModelProvider(this).get(AddWishViewModel::class.java)
-        addWishViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        addWishViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 account = it
                 checkLikeAndWishList()
             }
-        })
+        }
     }
 
     private fun initRemoveWishViewModel() {
         removeWishViewModel = ViewModelProvider(this).get(RemoveWishViewModel::class.java)
-        removeWishViewModel.getAccountObserver().observe(this, Observer<Account?> {
+        removeWishViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
                 account = it
                 checkLikeAndWishList()
             }
-        })
+        }
     }
 
     private fun checkLikeAndWishList() {
+        val view = requireView()
         if (gameId in account.likes) {
-            findViewById<ImageView>(R.id.like).setImageResource(R.drawable.like_full)
+            view.findViewById<ImageView>(R.id.like).setImageResource(R.drawable.like_full)
         } else {
-            findViewById<ImageView>(R.id.like).setImageResource(R.drawable.like)
+            view.findViewById<ImageView>(R.id.like).setImageResource(R.drawable.like)
         }
         if (gameId in account.wishlist) {
-            findViewById<ImageView>(R.id.wishlist).setImageResource(R.drawable.wishlist_full)
+            view.findViewById<ImageView>(R.id.wishlist).setImageResource(R.drawable.wishlist_full)
         } else {
-            findViewById<ImageView>(R.id.wishlist).setImageResource(R.drawable.wishlist)
+            view.findViewById<ImageView>(R.id.wishlist).setImageResource(R.drawable.wishlist)
         }
     }
 
     private fun initGameDetailViewModel() {
         gameDetailViewModel = ViewModelProvider(this).get(GameDetailViewModel::class.java)
-        gameDetailViewModel.getGameDetailObserver().observe(this, Observer<Map<String, GameResponse>?> {
+        gameDetailViewModel.getGameDetailObserver().observe(viewLifecycleOwner) {
             if (it == null) {
                 launchHomePage()
             } else {
@@ -238,43 +253,44 @@ class GameDetailActivity : AppCompatActivity() {
                     launchHomePage()
                 }
             }
-        })
+        }
     }
 
     private fun displayGameContent(game: GameInfo) {
+        val view = requireView()
 
         Glide.with(this)
             .load(game.screenshots[0].path_full)
-            .into(findViewById<ImageView>(R.id.background_image))
+            .into(view.findViewById<ImageView>(R.id.background_image))
 
         Glide.with(this)
             .load(game.header_image)
-            .into(findViewById<ImageView>(R.id.header_image))
+            .into(view.findViewById<ImageView>(R.id.header_image))
 
-        val view = findViewById<View>(R.id.background_image_item)
+        val background_image_item = view.findViewById<View>(R.id.background_image_item)
         Glide.with(this)
             .load(game.background)
             .into(object : CustomTarget<Drawable>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    view.background = resource
+                    background_image_item.background = resource
                 }
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
 
-        findViewById<TextView>(R.id.game_name).text = game.name
-        findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
-        findViewById<TextView>(R.id.description).text = Html.fromHtml(game.detailed_description)
+        view.findViewById<TextView>(R.id.game_name).text = game.name
+        view.findViewById<TextView>(R.id.game_publisher).text = game.publishers[0]
+        view.findViewById<TextView>(R.id.description).text = Html.fromHtml(game.detailed_description)
     }
 
     private fun launchLogin() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        findNavController().navigate(
+            GameDetailFragmentDirections.actionGameDetailFragmentToLoginFragment()
+        )
     }
 
     private fun launchHomePage() {
-        val intent = Intent(this, HomepageActivity::class.java)
-        startActivity(intent)
-        finish()
+        findNavController().navigate(
+            GameDetailFragmentDirections.actionGameDetailFragmentToHomePageFragment()
+        )
     }
 }

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">4AL2AndroidGrp2</string>
+    <string name="app_name" translatable="false">4AL2AndroidGrp2</string>
 
     <string name="login_title">Bienvenue !</string>
     <string name="login_subtitle">Veuillez vous connecter ou\n créer un nouveau compte\n pour utiliser l\'application.</string>
     <string name="submit_connection">Se connecter</string>
     <string name="create_account">Créer un nouveau compte</string>
-    <string name="forgotten_password"><u>Mot de passe oublié</u></string>
+    <string name="forgotten_password_login"><u>Mot de passe oublié</u></string>
 
     <string name="inscription_title">Inscription</string>
     <string name="inscription_informations">Veuillez saisir ces différentes informations,\n afin que vos listes soient sauvegardées.</string>
@@ -31,11 +31,12 @@
     <string name="empty_likes">Vous n\'avez encore pas liké de contenu.</string>
     <string name="add_likes">Cliquez sur le coeur pour en rajouter.</string>
 
-    <string name="forgotten_password_informations">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
-    <string name="resend_password">Renvoyer mon mot de passe</string>
+    <string name="forgotten_password">Mot de passe oublié</string>
+    <string name="forgotten_password_informations">Veuillez saisir votre email et votre nouveau mot de passe afin de réinitialiser votre mot de passe</string>
+    <string name="resend_password">Modifier mon mot de passe</string>
 
     <string name="search">Recherche</string>
-    <string name="numbers_of_results">Nombre de résultats : </string>
+    <string name="numbers_of_results"><u>Nombre de résultats : </u></string>
 
     <string name="my_wishlist">Ma liste de souhaits</string>
     <string name="empty_wishlist">Vous n\'avez pas encore ajouté de contenu.</string>
