@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -43,15 +44,20 @@ class LoginFragment : Fragment() {
                 LoginFragmentDirections.actionLoginFragmentToSubscribeFragment()
             )
         }
+        view.findViewById<TextView>(R.id.forgotten_password).setOnClickListener(){
+            findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToForgottenPassword()
+            )
+        }
     }
 
     private fun initMeViewModel() {
         meViewModel = ViewModelProvider(this).get(MeViewModel::class.java)
         meViewModel.getAccountObserver().observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(
+                /*findNavController().navigate(
                     LoginFragmentDirections.actionLoginFragmentToHomePageFragment()
-                )
+                )*/
             }
         }
     }

@@ -19,6 +19,9 @@ interface ApiAuthController {
     @POST("/auth/login")
     fun login(@Body body: LoginRequest) : Call<LoginToken>
 
+    @POST("/auth/resetpassword")
+    fun resetPassword(@Body body: LoginRequest) : Call<Account>
+
     @GET("/auth/me")
     fun me() : Call<Account>
 
